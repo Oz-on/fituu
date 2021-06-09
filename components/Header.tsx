@@ -15,7 +15,7 @@ const StyledHeader = styled.header`
   display: flex;
   flex-direction: 'row';
   justify-content: space-between;
-  align-items: 'center';
+  align-items: center;
   width: 100%;
   padding: 25px 50px;
 `;

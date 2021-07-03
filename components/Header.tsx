@@ -13,11 +13,14 @@ import Logo from './Logo';
 
 const StyledHeader = styled.header`
   display: flex;
-  flex-direction: 'row';
+  flex-direction: row;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  position: relative;
+  zIndex: 10;
   padding: 25px 50px;
+  box-shadow: 0px 4px 8px 1px rgba(21, 29, 56, 0.12);
 `;
 
 const StyledNav = styled.nav`
@@ -26,6 +29,17 @@ const StyledNav = styled.nav`
 
 const Header = () => {
   const [session, loading] = useSession();
+
+  const handleLogin = () => {
+    signIn('cognito', {
+      callbackUrl: `${window.location.origin}/dashboard`
+    })
+  };
+
+  const handleLogout = () => {
+    signOut();
+  };
+
   return (
     <StyledHeader>
       <Link href={'/'}>
@@ -36,13 +50,7 @@ const Header = () => {
       <StyledNav>
         {!session &&
           <>
-            <Button>Zaloguj się</Button>
-            <Button 
-              primary 
-              onClick={() => signIn('cognito', {
-                callbackUrl: `${window.location.origin}/dashboard`
-              })}
-            >
+            <Button primary onClick={handleLogin}>
               Dołącz do nas
             </Button>
           </>
@@ -54,7 +62,9 @@ const Header = () => {
                 <Button>mój panel</Button>
               </a>
             </Link>
-            <Button>Wyloguj się</Button>
+            <Button onClick={handleLogout}>
+              Wyloguj się
+            </Button>
           </>
         }
       </StyledNav>

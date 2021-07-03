@@ -5,15 +5,12 @@ import styled from 'styled-components';
 
 import Header from '../../components/AlternativeHeader';
 import SideNav from '../../components/SideNav';
-import DashboardPanel from '../../components/DashboardPanel';
+import DashboardPanel from '../../features/dashboard/DashboardPanel';
+
+import PageContainer from '../../features/dashboard/components/PageContainer';
 
 const Page = styled.div`
   height: 100vh;
-`;
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: auto auto;
 `;
 
 // This page should be secured
@@ -24,10 +21,10 @@ const Dashboard = () => {
         <title>Dashboard</title>
       </Head>
       <Header />
-      <Container>
+      <PageContainer>
         <SideNav/>
         <DashboardPanel/>
-      </Container>
+      </PageContainer>
     </Page>
   )
 };

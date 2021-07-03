@@ -1,6 +1,7 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 
-const Img = styled.img`
+const StyledImg = styled(Image)`
   border-radius: 10px;
 `;
 
@@ -10,10 +11,10 @@ type Props = {
   height: string | number,
 };
 
-const Image = ({source, width, height}: Props) => {
+const Img = ({source, width, height}: Props) => {
   return (
-    <Img src={source} />
+    <StyledImg src={source} width={width} height={height} />
   );
 }
 
-export default Image;
+export default Img;

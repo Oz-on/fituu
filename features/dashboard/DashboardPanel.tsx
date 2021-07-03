@@ -1,15 +1,13 @@
 import styled from 'styled-components';
+import {useSession} from 'next-auth/client';
 
-import SectionTitle from './SectionTitle';
-import Image from './Image';
-import Button from './Button';
-import Card from './Card';
+import MainPanelContainer from './components/MainPanelContainer';
+import SectionTitle from '../../components/SectionTitle';
+import Image from '../../components/Image';
+import Button from '../../components/Button';
+import Card from '../../components/Card';
+import DataCard from './DataCard';
 
-const DashboardContainer = styled.div`
-  padding-top: 40px;
-  padding-left: 45px;
-  background: #E5E5E5;
-`;
 
 const FirstRow = styled.div`
   display: flex;
@@ -22,7 +20,7 @@ const FirstRow = styled.div`
 const SecondRow = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 30px 0;
+  padding: 25px 0;
 `;
 
 const GreetingText = styled.h2`
@@ -52,6 +50,7 @@ const StatsCard = styled(Card)`
   width: 20%;
   display: flex;
   flex-direction: column;
+  max-height: 120px;
   justify-content: space-between;
 `;
 
@@ -60,7 +59,7 @@ const CardStatsTitle = styled.p`
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
-  line-height: 16px;
+  // line-height: 16px;
   /* or 160% */
 
   letter-spacing: 1.5px;
@@ -74,7 +73,6 @@ const StatsValue = styled.p`
   font-style: normal;
   font-weight: 900;
   font-size: 30px;
-  line-height: 35px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
 
@@ -83,33 +81,33 @@ const StatsValue = styled.p`
 
 
 const DashboardPanel = () => {
+  const [session, loading] = useSession();
   return (
-    <DashboardContainer>
+    <MainPanelContainer>
       <SectionTitle text={'dashboard'}/>
-      <div>
-        <FirstRow>
-          <RowContainer>
-            <Image source={'https://picsum.photos/80/80'}/>
-            <GreetingText>Witaj, Janina</GreetingText>
-          </RowContainer>
-          <NewUserBtn primary>Dodaj nowego klienta</NewUserBtn>
-        </FirstRow>
-        <SecondRow>
-          <StatsCard>
-            <CardStatsTitle>Liczba Wyświetleń dziennie</CardStatsTitle>
-            <StatsValue>26</StatsValue>
-          </StatsCard>
-          <StatsCard>
-            <CardStatsTitle>Liczba wyświetleń miesięcznie</CardStatsTitle>
-            <StatsValue>3450</StatsValue>
-          </StatsCard>
-          <StatsCard>
-            <CardStatsTitle>Twoja ocena</CardStatsTitle>
-            <StatsValue>5</StatsValue>
-          </StatsCard>
-        </SecondRow>
-      </div>
-    </DashboardContainer>
+      <FirstRow>
+        <RowContainer>
+          <Image source={'https://picsum.photos/80/80'} width={80} height={80} />
+          <GreetingText>Witaj, {session.user.email}</GreetingText>
+        </RowContainer>
+        <NewUserBtn primary>+ Dodaj nowego klienta</NewUserBtn>
+      </FirstRow>
+      <SecondRow>
+        <StatsCard>
+          <CardStatsTitle>Liczba Wyświetleń dziennie</CardStatsTitle>
+          <StatsValue>26</StatsValue>
+        </StatsCard>
+        <StatsCard>
+          <CardStatsTitle>Liczba wyświetleń miesięcznie</CardStatsTitle>
+          <StatsValue>3450</StatsValue>
+        </StatsCard>
+        <StatsCard>
+          <CardStatsTitle>Twoja ocena</CardStatsTitle>
+          <StatsValue>5</StatsValue>
+        </StatsCard>
+      </SecondRow>
+      <DataCard/>
+    </MainPanelContainer>
   );
 };
 

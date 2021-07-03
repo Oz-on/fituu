@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'Next/Link';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 const StyledLink = styled.a`
@@ -9,11 +9,16 @@ const StyledLink = styled.a`
   text-transform: uppercase;
 `;
 
+type Props = {
+  description: string,
+  destination: string,
+  selected: boolean,
+};
 
-const SideNavElement = ({description, destination}) => {
+const SideNavElement = ({description, destination, selected}: Props) => {
   return (
     <Link href={destination}>
-      <StyledLink>{description}</StyledLink>
+      <StyledLink selected={selected}>{description}</StyledLink>
     </Link>
   );
 };

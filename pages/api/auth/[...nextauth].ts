@@ -9,5 +9,17 @@ export default NextAuth({
       domain: process.env.COGNITO_DOMAIN,
     })
   ],
-  debug: process.env.NODE_ENV === 'development' ? true : false
+  debug: process.env.NODE_ENV === 'development' ? true : false,
+  callbacks: {
+    async jwt(token, user, account, profile, isNewUser) {
+      if (account?.accessToken) {
+        token.accessToken = account.accessToken;
+      }
+      return token;
+    },
+    async session(session, token) {
+      session.accessToken = token.accessToken;
+      return session;
+    }
+  }
 });

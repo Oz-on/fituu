@@ -7,6 +7,7 @@ const Button = styled.button`
   display: block;
   padding: 10px 15px;
   background-color: ${props => props.primary ? "#0F35B7" : "#ffffff"};
+  color: ${props => props.primary ? "#ffffff" : "#0f35B7"};
   border-radius: 8px;
   line-height: 16px;
   align-items: center;
@@ -19,7 +20,7 @@ const Button = styled.button`
   text-decoration: none;
   border: none;
   letter-spacing: 1.25px;
-  color: ${props => props.primary ? "#ffffff" : "#0f35B7"};
+  cursor: pointer;
 `;
 
 export default Button;

@@ -1,10 +1,8 @@
-import {useEffect} from 'react';
 import Head from 'next/head';
-import {useSession} from 'next-auth/client';
 import styled from 'styled-components';
 
 import Header from '../../../components/AlternativeHeader';
-import SideNav from '../../../components/SideNav';
+import SideNav from '../../../features/dashboard/SideNav';
 import DataPanel from '../../../features/dashboard/DataPanel';
 import PageContainer from '../../../features/dashboard/components/PageContainer';
 

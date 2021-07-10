@@ -1,17 +1,13 @@
-import React from 'react';
 import Head from 'next/head';
 import {getSession} from 'next-auth/client';
-import styled from 'styled-components';
 
-import Header from '../../components/AlternativeHeader';
-import SideNav from '../../components/SideNav';
+import SideNav from '../../features/dashboard/SideNav';
 import DashboardPanel from '../../features/dashboard/DashboardPanel';
-
 import PageContainer from '../../features/dashboard/components/PageContainer';
 
-const Page = styled.div`
-  height: 100vh;
-`;
+import Page from '../../components/Page';
+import Header from '../../components/AlternativeHeader';
+
 
 // This page should be secured
 const Dashboard = () => {

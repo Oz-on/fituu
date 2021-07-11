@@ -23,22 +23,22 @@ const MESSAGES_URL = '/dashboard/clients';
 const SideNav = () => {
   const [state, send] = useMachine(sideNavMachine);
 
-  useEffect(() => {
-    switch (window.location.pathname) {
-      case DASHBOARD_URL:
-        send('HIGHLIGHT_DASHBOARD');
-        break;
-      case MY_DATA_URL:
-      case EDIT_DATA_URL:
-        send('HIGHLIGHT_MYDATA');
-        break;
-      case CLIENTS_URL:
-        send('HIGHLIGHT_CLIENTS');
-        break;
-      case MESSAGES_URL:
-        send('HIGHLIGHT_MESSAGES');
-    }
-  }, [window.location.pathname]);
+  // useEffect(() => {
+  //   switch (window.location.pathname) {
+  //     case DASHBOARD_URL:
+  //       send('HIGHLIGHT_DASHBOARD');
+  //       break;
+  //     case MY_DATA_URL:
+  //     case EDIT_DATA_URL:
+  //       send('HIGHLIGHT_MYDATA');
+  //       break;
+  //     case CLIENTS_URL:
+  //       send('HIGHLIGHT_CLIENTS');
+  //       break;
+  //     case MESSAGES_URL:
+  //       send('HIGHLIGHT_MESSAGES');
+  //   }
+  // }, [window.location.pathname]);
 
   return (
     <Container>

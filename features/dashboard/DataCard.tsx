@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import Card from '../../components/Card';
 import EditIcon from '../../components/EditIcon';
+import { useUserMachine } from './machines';
 
 const DataCardContainer = styled(Card)`
   width: 85%;
@@ -68,18 +69,13 @@ const EditLink = styled.a`
 `;
 
 const DataCard = () => {
-  // TODO: Assign data from user, use context to this job
-  const [session] = useSession();
+  // NOTE: this hook should return user data
+  const [state, send] = useUserMachine();
+
   useEffect(() => {
-    console.log('session: ', session);
-    fetch('127.0.0.1:8000/api/user', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        HTTP_AUTHORIZATION: `Bearer ${session.accessToken}`,
-      }
-    }).then(response => response.json()).then(responseJson => console.log('response from API: ', responseJson));
+    send({type: 'FETCH'});
   }, []);
+
   return (
     <DataCardContainer>
       <RowContainer>

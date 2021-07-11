@@ -7,6 +7,7 @@ const StyledLink = styled.a`
   font-family: Roboto;
   margin-bottom: 20px;
   text-transform: uppercase;
+  cursor: pointer;
 `;
 
 type Props = {

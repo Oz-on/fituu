@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 import Chip from "../../atoms/Chip";
+import RatingStar from "../../atoms/RatingStar";
 type CardProps = {
   avatar?: string;
   name?: string;
@@ -32,7 +33,7 @@ const Card = ({
       <CardContentWrapper>
         <Row>
           <span className="name">{name}</span>
-          <span>{rating}</span>
+          <RatingStar rating={rating} />
         </Row>
         <Row>
           <span className="spanTitle">{title}</span>
@@ -53,8 +54,8 @@ const Card = ({
 export default Card;
 
 const CardContainer = styled.div`
-  min-height: 300px;
-  width: 300px;
+  min-height: 350px;
+  width: 250px;
   overflow: hidden;
   margin: 0 20px 40px;
   background: #fff 50%;
@@ -88,13 +89,13 @@ const Row = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   .name {
-    font-size: 18px;
+    font-size: 20px;
     text-transform: capitalize;
     font-weight: 500;
   }
 
   .spanTitle {
-    font-size: 12px;
+    font-size: 10px;
     text-transform: uppercase;
   }
 `;

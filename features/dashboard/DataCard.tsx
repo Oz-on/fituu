@@ -4,7 +4,7 @@ import {useSession} from 'next-auth/client';
 import styled from 'styled-components';
 
 import Card from '../../components/Card';
-import EditIcon from '../../components/EditIcon';
+import EditIcon from '../../components/atoms/EditIcon';
 import { useUserMachine } from './machines';
 
 const DataCardContainer = styled(Card)`

@@ -1,8 +1,4 @@
-import styled from 'styled-components';
-
-const EditIconContainer = styled.span`
-  margin-right: 5px;
-`;
+import styled from "styled-components";
 
 const EditIcon = () => {
 
@@ -13,6 +9,11 @@ const EditIcon = () => {
       </svg>
     </EditIconContainer>
   );
-}
+};
+
+const EditIconContainer = styled.span`
+  margin-right: 5px;
+`;
+
 
 export default EditIcon;

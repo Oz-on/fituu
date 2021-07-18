@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import {useSession} from 'next-auth/client';
 
 import MainPanelContainer from './components/MainPanelContainer';
-import SectionTitle from '../../components/SectionTitle';
-import Image from '../../components/Image';
-import Button from '../../components/Button';
+import SectionTitle from '../../components/atoms/SectionTitle';
+import Image from '../../components/atoms/Image';
+import Button from '../../components/atoms/Button';
 import Card from '../../components/Card';
 import DataCard from './DataCard';
 
@@ -84,7 +84,7 @@ const DashboardPanel = () => {
   const [session, loading] = useSession();
   return (
     <MainPanelContainer>
-      <SectionTitle text={'dashboard'}/>
+      <SectionTitle>dashboard</SectionTitle>
       <FirstRow>
         <RowContainer>
           <Image source={'https://picsum.photos/80/80'} width={80} height={80} />

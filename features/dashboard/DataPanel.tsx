@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 import DataCard from './DataCard';
-import OffersList from './OffersList';
+import OffersList from '../../components/organisms/OffersList';
 
 import MainPanelContainer from './components/MainPanelContainer';
 
-import SectionTitle from '../../components/SectionTitle';
-import Button from '../../components/Button';
+import SectionTitle from '../../components/atoms/SectionTitle';
+import Button from '../../components/atoms/Button';
 
 const RowContainer = styled.div`
   display: flex;
@@ -24,15 +24,15 @@ const NewOfferBtn = styled(Button)`
 const DataPanel = () => {
   return (
     <MainPanelContainer>
-      <SectionTitle text={'twoje dane'} />
+      <SectionTitle>twoje dane</SectionTitle>
       <DataCard />
       <RowContainer>
-        <SectionTitle text={'oferty'}/>
+        <SectionTitle>Oferty</SectionTitle>
         <NewOfferBtn primary>
           + Dodaj nową ofertę
         </NewOfferBtn>
       </RowContainer>
-      <OffersList />
+      <OffersList offers={[]} />
     </MainPanelContainer>
   );
 };

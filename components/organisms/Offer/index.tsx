@@ -1,6 +1,29 @@
 import styled from 'styled-components';
 
-import Card from '../../../components/Card';
+import Card from '../../Card';
+
+export type OffersProps = {
+  name: string,
+  price: number,
+  description: string,
+}
+
+const Offer = ({name, price, description}: OffersProps) => {
+  return (
+    <OfferContainer>
+      <div>
+        <DataRowTitle>nazwa oferty:</DataRowTitle>
+        <DataRowTitle>cena:</DataRowTitle>
+        <DataRowTitle>opis:</DataRowTitle>
+      </div>
+      <div>
+        <DataRowContent>{name}</DataRowContent>
+        <DataRowContent>{price}</DataRowContent>
+        <DataRowContent>{description}</DataRowContent>
+      </div>
+    </OfferContainer>
+  )
+};
 
 const OfferContainer = styled(Card)`
   width: 85%;
@@ -32,28 +55,5 @@ const DataRowContent = styled(Text)`
   letter-spacing: 0.1px;
   color: #272E39;
 `;
-
-type Props = {
-  name: string,
-  price: number,
-  description: string,
-}
-
-const Offer = ({name, price, description}: Props) => {
-  return (
-    <OfferContainer>
-      <div>
-        <DataRowTitle>nazwa oferty:</DataRowTitle>
-        <DataRowTitle>cena:</DataRowTitle>
-        <DataRowTitle>opis:</DataRowTitle>
-      </div>
-      <div>
-        <DataRowContent>{name}</DataRowContent>
-        <DataRowContent>{price}</DataRowContent>
-        <DataRowContent>{description}</DataRowContent>
-      </div>
-    </OfferContainer>
-  )
-};
 
 export default Offer;

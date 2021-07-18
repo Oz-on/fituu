@@ -6,7 +6,7 @@ import {useForm, SubmitHandler} from 'react-hook-form';
 
 import MainPanelContainer from './components/MainPanelContainer';
 
-import SectionTitle from '../../components/SectionTitle';
+import SectionTitle from '../../components/atoms/SectionTitle';
 
 type Inputs = {
   fullName: string,
@@ -113,7 +113,7 @@ const EditDataPanel = () => {
 				<Link href={'/dashboard/my-data'}>
 					<BackLink>Cofnij</BackLink>
 				</Link>
-				<SectionTitle text={'Twoje dane'} />
+				<SectionTitle>Twoje dane</SectionTitle>
 			</RowContainer>
 			<Form>
 				<div>

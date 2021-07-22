@@ -23,3 +23,11 @@ LoggedIn.args = {
   handleLogout: () => {},
   session: {},
 };
+
+export const AlternativeHeader = Template.bind({});
+AlternativeHeader.args = {
+  handleLogin: () => {},
+  handleLogout: () => {},
+  session: null,
+  alternative: true,
+}

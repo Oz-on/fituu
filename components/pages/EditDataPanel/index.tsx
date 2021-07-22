@@ -4,9 +4,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox, {CheckboxProps} from '@material-ui/core/Checkbox';
 import {useForm, SubmitHandler} from 'react-hook-form';
 
-import MainPanelContainer from './components/MainPanelContainer';
+import MainPanelContainer from '../../atoms/MainPanelContainer';
 
-import SectionTitle from '../../components/atoms/SectionTitle';
+import SectionTitle from '../../atoms/SectionTitle';
 
 type Inputs = {
   fullName: string,

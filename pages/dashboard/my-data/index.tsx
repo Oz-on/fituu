@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import styled from 'styled-components';
 
-import Header from '../../../components/AlternativeHeader';
-import SideNav from '../../../features/dashboard/SideNav';
-import DataPanel from '../../../features/dashboard/DataPanel';
-import PageContainer from '../../../features/dashboard/components/PageContainer';
+import PageContainer from '../../../components/atoms/PageContainer';
+import Header from '../../../components/organisms/Header';
+import SideNav from '../../../components/organisms/Nav';
+import DataPanel from '../../../components/pages/DataPanel';
 
 const Page = styled.div`
 	min-height: 100vh;

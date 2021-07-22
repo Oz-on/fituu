@@ -1,8 +1,8 @@
 import Head from 'next/head';
 
-import PageContainer from '../../../features/dashboard/components/PageContainer';
-import SideNav from '../../../features/dashboard/SideNav';
-import EditDataPanel from '../../../features/dashboard/EditDataPanel';
+import PageContainer from '../../../components/atoms/PageContainer';
+import SideNav from '../../../components/organisms/Nav';
+import EditDataPanel from '../../../components/pages/EditDataPanel';
 
 import Page from '../../../components/Page';
 import Header from '../../../components/organisms/Header/container';

@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
-import Card from '../../Card';
-
-export type OffersProps = {
+export type OfferProps = {
   name: string,
   price: number,
   description: string,
 }
 
-const Offer = ({name, price, description}: OffersProps) => {
+const Offer = ({name, price, description}: OfferProps) => {
   return (
     <OfferContainer>
       <div>
@@ -24,6 +22,13 @@ const Offer = ({name, price, description}: OffersProps) => {
     </OfferContainer>
   )
 };
+
+const Card = styled.div`
+  background: #FFFFFF;
+  box-shadow: 0px 4px 8px 1px rgba(21, 29, 56, 0.12);
+  border-radius: 8px;
+  padding: 10px 10px;
+`;
 
 const OfferContainer = styled(Card)`
   width: 85%;

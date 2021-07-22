@@ -1,7 +1,7 @@
-import Offer, {OffersProps} from "../Offer";
+import Offer, {OfferProps} from "../Offer";
 
-type OffersListProps = {
-  offers: Array<OffersProps>
+export type OffersListProps = {
+  offers: Array<OfferProps>
 };
 
 const OffersList = ({offers}: OffersListProps) => {

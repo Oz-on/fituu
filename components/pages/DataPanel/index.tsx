@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-import DataCard from './DataCard';
-import OffersList from '../../components/organisms/OffersList';
+import DataCard, {DataCardProps} from '../../organisms/DataCard';
+import OffersList from '../../organisms/OffersList';
+import {OfferProps} from '../../organisms/Offer';
 
-import MainPanelContainer from './components/MainPanelContainer';
+import MainPanelContainer from '../../atoms/MainPanelContainer';
 
-import SectionTitle from '../../components/atoms/SectionTitle';
-import Button from '../../components/atoms/Button';
+import SectionTitle from '../../atoms/SectionTitle';
+import Button from '../../atoms/Button';
 
 const RowContainer = styled.div`
   display: flex;
@@ -21,18 +22,23 @@ const NewOfferBtn = styled(Button)`
   background-color: #F7367D;
 `;
 
-const DataPanel = () => {
+type DataPanelProps = {
+  userData: DataCardProps,
+  offers: Array<OfferProps>,
+};
+
+const DataPanel = ({userData, offers}: DataPanelProps) => {
   return (
     <MainPanelContainer>
       <SectionTitle>twoje dane</SectionTitle>
-      <DataCard />
+      <DataCard {...userData}/>
       <RowContainer>
         <SectionTitle>Oferty</SectionTitle>
         <NewOfferBtn primary>
           + Dodaj nową ofertę
         </NewOfferBtn>
       </RowContainer>
-      <OffersList offers={[]} />
+      <OffersList offers={offers} />
     </MainPanelContainer>
   );
 };

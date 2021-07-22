@@ -1,16 +1,17 @@
-import Head from 'next/head';
-import {getSession} from 'next-auth/client';
+import Head from "next/head";
+import {getSession, useSession} from "next-auth/client";
 
-import SideNav from '../../features/dashboard/SideNav';
-import DashboardPanel from '../../features/dashboard/DashboardPanel';
-import PageContainer from '../../features/dashboard/components/PageContainer';
+import Nav from "../../components/organisms/Nav";
+import DashboardPanel from "../../components/pages/Dashboard";
+import PageContainer from '../../components/atoms/PageContainer';
 
 import Page from '../../components/Page';
-import Header from '../../components/AlternativeHeader';
+import Header from '../../components/organisms/AlternativeHeader';
 
 
 // This page should be secured
 const Dashboard = () => {
+  const [session, loading] = useSession();
   return (
     <Page>
       <Head>
@@ -18,8 +19,12 @@ const Dashboard = () => {
       </Head>
       <Header />
       <PageContainer>
-        <SideNav/>
-        <DashboardPanel/>
+        <Nav/>
+        <DashboardPanel 
+          email={session.user.email} 
+          profilePictureUrl={'https://picsum.photos/80/80'} 
+          userData={{}}
+        />
       </PageContainer>
     </Page>
   )

@@ -15,9 +15,10 @@ type HeaderProps = {
   session: Object | null;
   handleLogin: Function;
   handleLogout: Function;
+  alternative?: boolean,
 }
 
-const Header = ({session, handleLogin, handleLogout}: HeaderProps) => {
+const Header = ({session, alternative, handleLogin, handleLogout}: HeaderProps) => {
   return (
     <HeaderWrapper>
       <Link href={'/'}>
@@ -54,7 +55,7 @@ const StyledNav = styled.nav`
   display: flex;
 `;
 
-const HeaderWrapper = styled.header`
+const HeaderWrapper = styled.header<{alternative?: boolean}>`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -63,5 +64,6 @@ const HeaderWrapper = styled.header`
   position: relative;
   zIndex: 10;
   padding: 25px 50px;
-  box-shadow: 0px 4px 8px 1px rgba(21, 29, 56, 0.12);
+  background: ${({alternative}) => alternative ? '#ffffff' : 'transparent'}
+  box-shadow: ${({alternative}) => alternative ? "0px 4px 14px -6px rgba(39, 46, 57, 0.1)" : "0px 4px 8px 1px rgba(21, 29, 56, 0.12)"};
 `;

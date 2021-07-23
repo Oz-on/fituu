@@ -1,27 +1,22 @@
-import Head from 'next/head';
-import styled from 'styled-components';
+import { useSession } from "next-auth/client";
+import Head from "next/head";
 
-import PageContainer from '../../../components/atoms/PageContainer';
-import Header from '../../../components/organisms/Header';
-import SideNav from '../../../components/organisms/Nav';
-import DataPanel from '../../../components/pages/DataPanel';
-
-const Page = styled.div`
-	min-height: 100vh;
-`;
+import DataPanel from "../../../components/pages/DataPanel";
 
 const DataPage = () => {
+	const [session, loading] = useSession();
+
   return (
-		<Page>
+		<>
 			<Head>
 				<title>Data</title>
 			</Head>
-			<Header />
-			<PageContainer>
-				<SideNav />
-				<DataPanel />
-			</PageContainer>
-		</Page>
+			<DataPanel 
+				session={session} 
+				userData={{}} 
+				offers={[]}
+			/>
+		</>
 	)
 };
 

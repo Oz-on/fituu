@@ -5,8 +5,11 @@ import Checkbox, {CheckboxProps} from '@material-ui/core/Checkbox';
 import {useForm, SubmitHandler} from 'react-hook-form';
 
 import MainPanelContainer from '../../atoms/MainPanelContainer';
-
 import SectionTitle from '../../atoms/SectionTitle';
+import PageContainer from '../../atoms/PageContainer';
+
+import Nav from '../../organisms/Nav';
+import Header from '../../organisms/Header/container';
 
 type Inputs = {
   fullName: string,
@@ -99,7 +102,11 @@ const Categories = styled.div`
   padding: 5px;
 `;
 
-const EditDataPanel = () => {
+type Props = {
+  session: Object,
+}
+
+const EditDataPanel = ({session}: Props) => {
 
   const {register, handleSubmit, formState: {errors}} = useForm<Inputs>();
 
@@ -108,84 +115,90 @@ const EditDataPanel = () => {
   };
 
 	return (
-		<MainPanelContainer>
-			<RowContainer>
-				<Link href={'/dashboard/my-data'}>
-					<BackLink>Cofnij</BackLink>
-				</Link>
-				<SectionTitle>Twoje dane</SectionTitle>
-			</RowContainer>
-			<Form>
-				<div>
-					<InputContainer>
-						<Label>Email</Label>
-						<Input disabled />
-					</InputContainer>
-					<InputContainer>
-						<Label>Lokalizacja</Label>
-						<Input {...register('localization', {required: true})}/>
-					</InputContainer>
-				</div>
-				<div>
-					<InputContainer>
-						<Label>imie i nazwisko</Label>
-						<Input {...register('fullName', {required: true})}/>
-					</InputContainer>
-					<InputContainer>
-						<Label>Specjalizacja</Label>
-						<Select {...register('specialization')} id="specialization">
-              <option value={'personal_trainer'}>Trener Personalny</option>
-              <option value={'nutritionist'}>Dietetyk</option>
-            </Select>
-					</InputContainer>
-				</div>
-        <FullWidthContainer>
-          <Label>Kategorie</Label>
-          <Categories>
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="odchudzanie"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="modelowanie pośladków"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="budowa masy mięśniowej"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="taniec na rurze"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="treningi siłowe"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="tenis"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="pływanie"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="body building"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-              label="lekkoatletyka"
-            />
-          </Categories>
-        </FullWidthContainer>
-        <FullWidthContainer>
-          <Label>o tobie - opis</Label>
-          <MultilineInput />
-        </FullWidthContainer>
-			</Form>
-		</MainPanelContainer>
+    <div className={'page'}>
+      <Header session={session} alternative={true}/>
+      <PageContainer>
+        <Nav />
+        <MainPanelContainer>
+          <RowContainer>
+            <Link href={'/dashboard/my-data'}>
+              <BackLink>Cofnij</BackLink>
+            </Link>
+            <SectionTitle>Twoje dane</SectionTitle>
+          </RowContainer>
+          <Form>
+            <div>
+              <InputContainer>
+                <Label>Email</Label>
+                <Input disabled />
+              </InputContainer>
+              <InputContainer>
+                <Label>Lokalizacja</Label>
+                <Input {...register('localization', {required: true})}/>
+              </InputContainer>
+            </div>
+            <div>
+              <InputContainer>
+                <Label>imie i nazwisko</Label>
+                <Input {...register('fullName', {required: true})}/>
+              </InputContainer>
+              <InputContainer>
+                <Label>Specjalizacja</Label>
+                <Select {...register('specialization')} id="specialization">
+                  <option value={'personal_trainer'}>Trener Personalny</option>
+                  <option value={'nutritionist'}>Dietetyk</option>
+                </Select>
+              </InputContainer>
+            </div>
+            <FullWidthContainer>
+              <Label>Kategorie</Label>
+              <Categories>
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="odchudzanie"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="modelowanie pośladków"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="budowa masy mięśniowej"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="taniec na rurze"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="treningi siłowe"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="tenis"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="pływanie"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="body building"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
+                  label="lekkoatletyka"
+                />
+              </Categories>
+            </FullWidthContainer>
+            <FullWidthContainer>
+              <Label>o tobie - opis</Label>
+              <MultilineInput />
+            </FullWidthContainer>
+          </Form>
+        </MainPanelContainer>
+      </PageContainer>
+    </div>
 	)
 };
 

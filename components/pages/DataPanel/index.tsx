@@ -1,13 +1,45 @@
 import styled from 'styled-components';
 
+import MainPanelContainer from '../../atoms/MainPanelContainer';
+import SectionTitle from '../../atoms/SectionTitle';
+import ActionButton from '../../atoms/ActionBtn';
+import PageContainer from '../../atoms/PageContainer';
+
 import DataCard, {DataCardProps} from '../../organisms/DataCard';
 import OffersList from '../../organisms/OffersList';
 import {OfferProps} from '../../organisms/Offer';
+import Header from '../../organisms/Header/container';
+import Nav from '../../organisms/Nav';
 
-import MainPanelContainer from '../../atoms/MainPanelContainer';
+type DataPanelProps = {
+  session: Object,
+  userData: DataCardProps,
+  offers: Array<OfferProps>,
+};
 
-import SectionTitle from '../../atoms/SectionTitle';
-import Button from '../../atoms/Button';
+const DataPanel = ({session, userData, offers}: DataPanelProps) => {
+  return (
+    <div className={'page'}>
+      <Header session={session} alternative={true} />
+      <PageContainer>
+        <Nav />
+        <MainPanelContainer>
+          <SectionTitle>twoje dane</SectionTitle>
+          <DataCard {...userData}/>
+          <RowContainer>
+            <SectionTitle>Oferty</SectionTitle>
+            <ActionButton primary onClick={() => {}}>
+              + Dodaj nową ofertę
+            </ActionButton>
+          </RowContainer>
+          <OffersList offers={offers} />
+        </MainPanelContainer>
+      </PageContainer>
+    </div>
+  );
+};
+
+export default DataPanel;
 
 const RowContainer = styled.div`
   display: flex;
@@ -15,32 +47,3 @@ const RowContainer = styled.div`
   width: 85%;
   margin-top: 30px;
 `;
-
-const NewOfferBtn = styled(Button)`
-  max-height: 50px;
-  padding: 20px;
-  background-color: #F7367D;
-`;
-
-type DataPanelProps = {
-  userData: DataCardProps,
-  offers: Array<OfferProps>,
-};
-
-const DataPanel = ({userData, offers}: DataPanelProps) => {
-  return (
-    <MainPanelContainer>
-      <SectionTitle>twoje dane</SectionTitle>
-      <DataCard {...userData}/>
-      <RowContainer>
-        <SectionTitle>Oferty</SectionTitle>
-        <NewOfferBtn primary>
-          + Dodaj nową ofertę
-        </NewOfferBtn>
-      </RowContainer>
-      <OffersList offers={offers} />
-    </MainPanelContainer>
-  );
-};
-
-export default DataPanel;

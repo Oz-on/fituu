@@ -4,9 +4,10 @@ import Header from "./";
 
 type HeaderContainerProps = {
   session: Object;
+  alternative: boolean,
 };
 
-const HeaderContainer = ({session}: HeaderContainerProps) => {
+const HeaderContainer = ({session, alternative}: HeaderContainerProps) => {
   const handleLogin = () => {
     signIn("cognito", {
       callbackUrl: `${window.location.origin}/dashboard`
@@ -22,6 +23,7 @@ const HeaderContainer = ({session}: HeaderContainerProps) => {
       handleLogin={handleLogin} 
       handleLogout={handleLogout} 
       session={session} 
+      alternative={alternative}
     />
   );
 };

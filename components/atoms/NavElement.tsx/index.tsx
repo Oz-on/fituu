@@ -23,4 +23,5 @@ const NavElementWrapper = styled.a<{selected?: boolean}>`
   font-family: Roboto;
   margin-bottom: 20px;
   text-transform: uppercase;
+  cursor: pointer;
 `;

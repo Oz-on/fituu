@@ -11,7 +11,7 @@ const Nav = () => {
         description={"mój panel"} 
       />
       <SideNavElement
-        destination={"/dashboard/mydata"}
+        destination={"/dashboard/my-data"}
         description={"moje dane"}
       />
       <SideNavElement
@@ -31,7 +31,7 @@ const NavWrapper = styled.div`
   flex-direction: column;
   padding-top: 40px;
   padding-left: 40px;
-  background: #f1f4f9;
+  background: #fff;
 `;
 
 export default Nav;

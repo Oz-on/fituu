@@ -1,38 +1,52 @@
 import styled from 'styled-components';
 import {useSession} from 'next-auth/client';
 
+import PageContainer from '../../atoms/PageContainer';
 import MainPanelContainer from '../../atoms/MainPanelContainer';
 import SectionTitle from '../../atoms/SectionTitle';
 import Image from '../../atoms/Image';
-import Button from '../../atoms/Button';
+import ActionButton from '../../atoms/ActionBtn';
 import StatsCard from '../../organisms/StatsCard';
 import DataCard, {DataCardProps} from '../../organisms/DataCard';
+import Nav from '../../organisms/Nav';
+import Header from '../../organisms/Header/container';
 
 type DashboardPanelProps = {
+  session: Object
   email: string;
   profilePictureUrl: string;
   userData: DataCardProps;
 }
 
-const DashboardPanel = ({email, userData, profilePictureUrl}: DashboardPanelProps) => {
-  const [session, loading] = useSession();
+const Dashboard = ({session, email, userData, profilePictureUrl}: DashboardPanelProps) => {
   return (
-    <MainPanelContainer>
-      <SectionTitle>dashboard</SectionTitle>
-      <FirstRow>
-        <RowContainer>
-          <Image source={profilePictureUrl} width={80} height={80} />
-          <GreetingText>Witaj, {email}</GreetingText>
-        </RowContainer>
-        <NewUserBtn primary>+ Dodaj nowego klienta</NewUserBtn>
-      </FirstRow>
-      <SecondRow>
-        <StatsCard title={'Liczba Wyświetleń dziennie'} value={26} />
-        <StatsCard title={'Liczba wyświetleń miesięcznie'} value={3450}/>
-        <StatsCard title={'Twoja ocena'} value={5} />
-      </SecondRow>
-      <DataCard {...userData} />
-    </MainPanelContainer>
+    <div className={'page'}>
+    <Header session={session} alternative={true} />
+    <PageContainer>
+      <Nav />
+      <MainPanelContainer>
+        <SectionTitle>dashboard</SectionTitle>
+        <FirstRow>
+          <RowContainer>
+            <Image source={profilePictureUrl} width={80} height={80} />
+            <GreetingText>Witaj, {email}</GreetingText>
+          </RowContainer>
+          <ActionButton 
+            primary 
+            onClick={() => {}}
+          >
+            + Dodaj nowego klienta
+          </ActionButton>
+        </FirstRow>
+        <SecondRow>
+          <StatsCard title={'Liczba Wyświetleń dziennie'} value={26} />
+          <StatsCard title={'Liczba wyświetleń miesięcznie'} value={3450}/>
+          <StatsCard title={'Twoja ocena'} value={5} />
+        </SecondRow>
+        <DataCard {...userData} />
+      </MainPanelContainer>
+    </PageContainer>
+    </div>
   );
 };
 
@@ -66,10 +80,4 @@ const RowContainer = styled.div`
   flex-direction: row;
 `;
 
-const NewUserBtn = styled(Button)`
-  max-height: 50px;
-  padding: 20px;
-  background-color: #F7367D;
-`;
-
-export default DashboardPanel;
+export default Dashboard;

@@ -20,7 +20,7 @@ type HeaderProps = {
 
 const Header = ({session, alternative, handleLogin, handleLogout}: HeaderProps) => {
   return (
-    <HeaderWrapper>
+    <HeaderWrapper alternative={alternative}>
       <Link href={'/'}>
         <a>
           <Logo />
@@ -64,6 +64,6 @@ const HeaderWrapper = styled.header<{alternative?: boolean}>`
   position: relative;
   zIndex: 10;
   padding: 25px 50px;
-  background: ${({alternative}) => alternative ? '#ffffff' : 'transparent'}
+  background: ${({alternative}) => alternative ? '#ffffff' : 'transparent'};
   box-shadow: ${({alternative}) => alternative ? "0px 4px 14px -6px rgba(39, 46, 57, 0.1)" : "0px 4px 8px 1px rgba(21, 29, 56, 0.12)"};
 `;

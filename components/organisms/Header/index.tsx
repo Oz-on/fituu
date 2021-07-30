@@ -35,9 +35,9 @@ const Header = ({session, alternative, handleLogin, handleLogout}: HeaderProps) 
         {session &&
           <>
             <Link href={'/dashboard'}>
-              <Button primary isLink={true}>
+              <LinkWrapper primary>
                 mój panel
-              </Button>
+              </LinkWrapper>
             </Link>
             <Button onClick={handleLogout}>
               Wyloguj się
@@ -66,4 +66,25 @@ const HeaderWrapper = styled.header<{alternative?: boolean}>`
   padding: 25px 50px;
   background: ${({alternative}) => alternative ? '#ffffff' : 'transparent'};
   box-shadow: ${({alternative}) => alternative ? "0px 4px 14px -6px rgba(39, 46, 57, 0.1)" : "0px 4px 8px 1px rgba(21, 29, 56, 0.12)"};
+`;
+
+const LinkWrapper = styled.a<{primary?: boolean}>`
+  display: block;
+  width: auto;
+  padding: 10px 15px;
+  background-color: ${({primary}) => primary ? "#0F35B7" : "#ffffff"};
+  color: ${({primary}) => primary ? "#ffffff" : "#0f35B7"};
+  border-radius: 8px;
+  line-height: 16px;
+  align-items: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  text-align: center;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  letter-spacing: 1.25px;
+  cursor: pointer;
 `;

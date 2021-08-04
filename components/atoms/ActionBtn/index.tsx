@@ -2,13 +2,15 @@ import styled from "styled-components";
 
 type ActionButtonProps = {
   children: React.ReactNode;
-  onClick: Function;
+  type: 'submit' | 'button' | 'reset';
+  onClick?: Function;
   primary?: boolean;
+  className?: string;
 };
 
-const ActionButton = ({children, onClick, primary}: ActionButtonProps) => {
+const ActionButton = ({children, onClick, primary, className}: ActionButtonProps) => {
   return (
-    <ActionButtonWrapper onClick={onClick} primary={primary}>
+    <ActionButtonWrapper onClick={onClick} primary={primary} className={className}>
       {children}
     </ActionButtonWrapper>
   )

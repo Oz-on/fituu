@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {useSession} from 'next-auth/client';
 
 import PageContainer from '../../atoms/PageContainer';
 import MainPanelContainer from '../../atoms/MainPanelContainer';
@@ -7,15 +6,17 @@ import SectionTitle from '../../atoms/SectionTitle';
 import Image from '../../atoms/Image';
 import ActionButton from '../../atoms/ActionBtn';
 import StatsCard from '../../organisms/StatsCard';
-import DataCard, {DataCardProps} from '../../organisms/DataCard';
+import DataCard from '../../organisms/DataCard';
 import Nav from '../../organisms/Nav';
 import Header from '../../organisms/Header/container';
+
+import {UserDataProps} from '../../../lib/contexts/UserDataProvider';
 
 type DashboardPanelProps = {
   session: Object
   email: string;
   profilePictureUrl: string;
-  userData: DataCardProps;
+  userData: UserDataProps;
 }
 
 const Dashboard = ({session, email, userData, profilePictureUrl}: DashboardPanelProps) => {
@@ -34,6 +35,7 @@ const Dashboard = ({session, email, userData, profilePictureUrl}: DashboardPanel
           <ActionButton 
             primary 
             onClick={() => {}}
+            type={'button'}
           >
             + Dodaj nowego klienta
           </ActionButton>
@@ -43,7 +45,7 @@ const Dashboard = ({session, email, userData, profilePictureUrl}: DashboardPanel
           <StatsCard title={'Liczba wyświetleń miesięcznie'} value={3450}/>
           <StatsCard title={'Twoja ocena'} value={5} />
         </SecondRow>
-        <DataCard {...userData} />
+        <DataCard userData={userData} />
       </MainPanelContainer>
     </PageContainer>
     </div>

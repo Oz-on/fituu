@@ -3,15 +3,15 @@ import styled from 'styled-components';
 
 import EditIcon from '../../atoms/EditIcon';
 
-export type DataCardProps = {
-  fullName: string;
-  specialization: string;
-  categories: string;
-  localization: string;
-  description: string;
+import {UserDataProps} from '../../../lib/contexts/UserDataProvider';
+import Chip from '../../atoms/Chip';
+
+type DataCardProps = {
+  userData: UserDataProps,
 }
 
-const DataCard = ({fullName, specialization, categories, localization, description}: DataCardProps) => {
+const DataCard = ({userData}: DataCardProps) => {
+  const {firstName, lastName, city, tags, type, description} = userData;
   return (
     <DataCardContainer>
       <RowContainer>
@@ -26,23 +26,23 @@ const DataCard = ({fullName, specialization, categories, localization, descripti
       <MainContentContainer>
         <Row>
           <DataRowTitle>Imię i nazwisko</DataRowTitle>
-          <DataRowContent>{fullName ? fullName : ' '}</DataRowContent>
+          <DataRowContent>{`${firstName} ${lastName}`}</DataRowContent>
         </Row>
         <Row>
           <DataRowTitle>Specjalizacja</DataRowTitle>
-          <DataRowContent>{specialization ? specialization : ' '}</DataRowContent>
+          <DataRowContent>{type}</DataRowContent>
         </Row>
         <Row>
           <DataRowTitle>Kategoria</DataRowTitle>
-          <DataRowContent>{categories ? categories : ' '}</DataRowContent>
+          <CategoriesRowContent>{tags.map(tag => <Chip margin={'5px'}>{tag.title}</Chip>)}</CategoriesRowContent>
         </Row>
         <Row>
           <DataRowTitle>Lokalizacja</DataRowTitle>
-          <DataRowContent>{localization ? localization : ' '}</DataRowContent>
+          <DataRowContent>{city}</DataRowContent>
         </Row>
         <Row>
           <DataRowTitle>Opis</DataRowTitle>
-          <DataRowContent>{description ? description : ' '}</DataRowContent>
+          <DataRowContent>{description}</DataRowContent>
         </Row>
       </MainContentContainer>
     </DataCardContainer>
@@ -102,6 +102,10 @@ const DataRowContent = styled(Text)`
   letter-spacing: 0.1px;
   color: #272E39;
 `;
+
+const CategoriesRowContent = styled(DataRowContent)`
+  display: flex;
+`
 
 const Title = styled(Text)`
   font-weight: bold;

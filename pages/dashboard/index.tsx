@@ -3,9 +3,18 @@ import {getSession, useSession} from "next-auth/client";
 
 import DashboardPanel from "../../components/pages/Dashboard";
 
+import { useUser } from "../../lib/contexts/UserDataProvider";
+
 const Dashboard = () => {
   const [session, loading] = useSession();
-  // TODO: Fetch user data here
+  const {user, isLoading} = useUser();
+
+  if (isLoading || loading) {
+    return null;
+  }
+
+  console.log('user: ', user);
+
   return (
     <>
       <Head>
@@ -15,7 +24,7 @@ const Dashboard = () => {
         session={session}
         email={'oskarad.2000@gmail.com'} 
         profilePictureUrl={'https://gravatar.com/avatar/d496b8bf36092d7d0796cf0cb1de8b27'}
-        userData={{}} 
+        userData={user} 
       />
     </>
   )

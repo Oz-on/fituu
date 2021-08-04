@@ -1,10 +1,12 @@
-import { useSession } from "next-auth/client";
+import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
 
 import DataPanel from "../../../components/pages/DataPanel";
+import { useUser } from "../../../lib/contexts/UserDataProvider";
 
 const DataPage = () => {
 	const [session, loading] = useSession();
+	const {user, isLoading} = useUser(null);
 
   return (
 		<>
@@ -13,7 +15,7 @@ const DataPage = () => {
 			</Head>
 			<DataPanel 
 				session={session} 
-				userData={{}} 
+				userData={user}
 				offers={[]}
 			/>
 		</>
@@ -22,4 +24,19 @@ const DataPage = () => {
 
 export default DataPage;
 
-// export async function  /
+export async function getServerSideProps(context) {
+  const {res} = context;
+  const session = await getSession(context);
+
+  if (!session) {
+    res.writehead(302, {
+      Location: '/',
+    });
+
+    return res.end();
+  }
+
+  return {
+    props: {session}
+  }
+}

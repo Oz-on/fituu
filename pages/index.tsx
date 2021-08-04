@@ -15,5 +15,5 @@ export default function Home() {
       </Head>
       <Header session={session} alternative={false} />  
     </>
-  )
+  );
 }

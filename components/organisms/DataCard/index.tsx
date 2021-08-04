@@ -16,28 +16,34 @@ const DataCard = ({fullName, specialization, categories, localization, descripti
     <DataCardContainer>
       <RowContainer>
         <Title>Twoje dane</Title>
-        <Link href={'/dashboard/my-data/edit'}>
-          <EditLink>
-            <EditIcon />
-            Edytuj dane
-          </EditLink>
-        </Link>
+          <Link href={'/dashboard/my-data/edit'}>
+            <EditLink>
+              <EditIcon />
+              Edytuj dane
+            </EditLink>
+          </Link>
       </RowContainer>
       <MainContentContainer>
-        <div>
+        <Row>
           <DataRowTitle>Imię i nazwisko</DataRowTitle>
+          <DataRowContent>{fullName ? fullName : ' '}</DataRowContent>
+        </Row>
+        <Row>
           <DataRowTitle>Specjalizacja</DataRowTitle>
+          <DataRowContent>{specialization ? specialization : ' '}</DataRowContent>
+        </Row>
+        <Row>
           <DataRowTitle>Kategoria</DataRowTitle>
+          <DataRowContent>{categories ? categories : ' '}</DataRowContent>
+        </Row>
+        <Row>
           <DataRowTitle>Lokalizacja</DataRowTitle>
+          <DataRowContent>{localization ? localization : ' '}</DataRowContent>
+        </Row>
+        <Row>
           <DataRowTitle>Opis</DataRowTitle>
-        </div>
-        <div>
-          <DataRowContent>{fullName}</DataRowContent>
-          <DataRowContent>{specialization}</DataRowContent>
-          <DataRowContent>{categories}</DataRowContent>
-          <DataRowContent>{localization}</DataRowContent>
-          <DataRowContent>{description}</DataRowContent>
-        </div>
+          <DataRowContent>{description ? description : ' '}</DataRowContent>
+        </Row>
       </MainContentContainer>
     </DataCardContainer>
   )
@@ -52,6 +58,10 @@ const Card = styled.div`
   padding: 10px 10px;
 `;
 
+const Row = styled.div`
+  display: flex;
+`;
+
 const DataCardContainer = styled(Card)`
   width: 85%;
   padding-left: 15px;
@@ -59,13 +69,12 @@ const DataCardContainer = styled(Card)`
 
 const MainContentContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 5fr;
 `;
 
 const RowContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-item: center;
+  align-items: center;
 `;
 
 const Text = styled.p`
@@ -74,6 +83,7 @@ const Text = styled.p`
 `;
 
 const DataRowTitle = styled(Text)`
+  width: 15%;
   margin: 10px 0;
   font-weight: 500;
   font-size: 10px;
@@ -84,6 +94,7 @@ const DataRowTitle = styled(Text)`
 `;
 
 const DataRowContent = styled(Text)`
+  width: 80%;
   margin: 10px 0;
   font-weight: normal;
   font-size: 14px;
@@ -102,7 +113,6 @@ const Title = styled(Text)`
 `;
 
 const EditLink = styled.a`
-  display: block;
   color: #F7367D;
   text-decoration: underline;
   font-family: Roboto;

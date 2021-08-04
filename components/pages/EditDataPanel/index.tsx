@@ -11,7 +11,7 @@ import PageContainer from '../../atoms/PageContainer';
 import Nav from '../../organisms/Nav';
 import Header from '../../organisms/Header/container';
 import ActionButton from '../../atoms/ActionBtn';
-import {mapTagToTitle} from '../../../lib';
+import {mapTagToBool, mapTagToTitle, mapUserTypeToInputId} from '../../../lib';
 import {useUserDataDispatch, UserDataEditionInputs, UserDataProps} from '../../../lib/contexts/UserDataProvider';
 import { useRouter } from 'next/dist/client/router';
 
@@ -23,7 +23,23 @@ type Props = {
 const EditDataPanel = ({session, userData}: Props) => {
   const router = useRouter();
   const {updateUserData} = useUserDataDispatch();
-  const {control, register, handleSubmit, formState: {errors}} = useForm<UserDataEditionInputs>();
+  const tags = mapTagToBool(userData.tags);
+
+  console.log('userData: ', userData);
+  console.log('tags: ', tags);
+
+  const {control, register, handleSubmit, formState: {errors}} = useForm<UserDataEditionInputs>({
+    defaultValues: {
+      fullName: `${userData.firstName} ${userData.lastName}`,
+      city: userData.city,
+      type: mapUserTypeToInputId(userData.type),
+      '1': tags['1'],
+      '2': tags['2'],
+      '3': tags['3'],
+      '4': tags['4'],
+    }
+
+  });
 
   const successCallback = () => {
     router.replace('/dashboard/my-data/');
@@ -61,7 +77,7 @@ const EditDataPanel = ({session, userData}: Props) => {
             <div>
               <InputContainer>
                 <Label>imie i nazwisko</Label>
-                <Input {...register('fullName', {required: true})} type={'text'} defaultValue={`${userData.firstName} ${userData.lastName}`} />
+                <Input {...register('fullName', {required: true})} type={'text'} />
               </InputContainer>
               <InputContainer>
                 <Label>Specjalizacja</Label>
@@ -79,17 +95,20 @@ const EditDataPanel = ({session, userData}: Props) => {
                     <Controller 
                       name="1"
                       control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
+                      defaultValue={tags[1]}
+                      render={({ field }) => <Checkbox {...field} defaultValue={tags[1]} defaultChecked={tags[1]}/>}
                     />
                   }
                   label={mapTagToTitle('1')}
                 />
                 <FormControlLabel
+                  defaultValue={tags['2']}
                   control={
                     <Controller 
                       name="2"
                       control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
+                      defaultValue={tags[2]}
+                      render={({ field }) => <Checkbox {...field} defaultValue={tags[2]} defaultChecked={tags[2]}/>}
                     />
                   }
                   label={mapTagToTitle('2')}
@@ -99,7 +118,8 @@ const EditDataPanel = ({session, userData}: Props) => {
                     <Controller 
                       name="3"
                       control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
+                      defaultValue={tags[3]}
+                      render={({ field }) => <Checkbox {...field} defaultValue={tags[3]} defaultChecked={tags[3]}/>}
                     />
                   }
                   label={mapTagToTitle('3')}
@@ -109,50 +129,11 @@ const EditDataPanel = ({session, userData}: Props) => {
                     <Controller 
                       name="4"
                       control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
+                      defaultValue={tags[4]}
+                      render={({ field }) => <Checkbox {...field} defaultValue={tags[4]} defaultChecked={tags[4]}/>}
                     />
                   }
                   label={mapTagToTitle('4')}
-                />
-                <FormControlLabel
-                  control={
-                    <Controller 
-                      name="5"
-                      control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
-                    />
-                  }
-                  label={mapTagToTitle('5')}
-                />
-                <FormControlLabel
-                  control={
-                    <Controller 
-                      name="6"
-                      control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
-                    />
-                  }
-                  label={mapTagToTitle('6')}
-                />
-                <FormControlLabel
-                  control={
-                    <Controller 
-                      name="7"
-                      control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
-                    />
-                  }
-                  label={mapTagToTitle('7')}
-                />
-                <FormControlLabel
-                  control={
-                    <Controller 
-                      name="8"
-                      control={control}
-                      render={({ field }) => <Checkbox {...field}/>}
-                    />
-                  }
-                  label={mapTagToTitle('8')}
                 />
               </Categories>
             </FullWidthContainer>

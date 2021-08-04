@@ -1,13 +1,14 @@
+import {TagProps} from './contexts/UserDataProvider';
 export const mapTagToTitle = (id: string): string => {
   switch(id) {
     case '1':
-      return 'odchudzanie';
+      return 'Odchudzanie';
     case '2':
-      return 'modelowanie pośladków';
+      return 'Wzmocnienie';
     case '3':
-      return 'budowa masy mięśniowej';
+      return 'Siła';
     case '4':
-      return 'taniec na rurze';
+      return 'Sylwetka';
     case '5':
       return 'treningi siłowe';
     case '6':
@@ -18,6 +19,14 @@ export const mapTagToTitle = (id: string): string => {
       return 'lekkoatletyka';
   }
 };
+
+export const mapTagToBool = (tags: Array<TagProps>): Object => {
+  const mapOfTags = {};
+  tags.forEach(tag => {
+    mapOfTags[tag.id.toString()] = true;
+  });
+  return mapOfTags;
+}
 
 export const getTagsArr = (tags: Object): Array<number> => {
   // For a now in data base there are only 4 types
@@ -39,6 +48,19 @@ export const mapUserType = (name: string): number => {
       return 2;
     case 'client':
       return 3;
+    default:
+      throw new Error('Wrong user type name given');
+  }
+}
+
+export const mapUserTypeToInputId= (type: string): string => {
+  switch(type) {
+    case 'Trener personalny':
+      return 'personal_trainer';
+    case 'Dietetyk':
+      return 'nutritionist';
+    case 'Klient':
+      return 'client';
     default:
       throw new Error('Wrong user type name given');
   }

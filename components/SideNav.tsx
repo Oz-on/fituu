@@ -7,9 +7,8 @@ import SideNavElement from "./SideNavElement";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
-  padding-left: 40px;
-  background: #f1f4f9;
+  padding: 40px 10px 0 40px;
+  background: #fff;
 `;
 
 const SideNav = () => {

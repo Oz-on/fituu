@@ -8,6 +8,10 @@ const DataPage = () => {
 	const [session, loading] = useSession();
 	const {user, isLoading} = useUser(null);
 
+	if (loading || isLoading) {
+		return null;
+	}
+
   return (
 		<>
 			<Head>

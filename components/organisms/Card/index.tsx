@@ -8,7 +8,7 @@ type CardProps = {
   rating?: number;
   location?: string;
   title?: string;
-  categories: { id: string; name: string }[] | undefined;
+  categories: { id: number; name: string }[] | undefined;
 };
 
 const Card = ({

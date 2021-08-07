@@ -25,9 +25,6 @@ const EditDataPanel = ({session, userData}: Props) => {
   const {updateUserData} = useUserDataDispatch();
   const tags = mapTagToBool(userData.tags);
 
-  console.log('userData: ', userData);
-  console.log('tags: ', tags);
-
   const {control, register, handleSubmit, formState: {errors}} = useForm<UserDataEditionInputs>({
     defaultValues: {
       fullName: `${userData.firstName} ${userData.lastName}`,
@@ -46,9 +43,7 @@ const EditDataPanel = ({session, userData}: Props) => {
   }
 
   const onSubmit: SubmitHandler<UserDataEditionInputs> = data => {
-    console.log('data: ', data);
     updateUserData(userData, data, successCallback);
-
   };
 
 	return (

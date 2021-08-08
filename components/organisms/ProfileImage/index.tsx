@@ -12,6 +12,7 @@ type Props = {
 
 const ProfileImage = ({imgUrl, inEditState, width, height, onChange}: Props) => {
   const fileInput = useRef(null);
+  const image = useRef(null);
 
   const handleClick = () => {
     if (fileInput.current) {
@@ -20,7 +21,19 @@ const ProfileImage = ({imgUrl, inEditState, width, height, onChange}: Props) => 
   };
 
   const handleChange = () => {
-    onChange(fileInput.current.files[0]);
+    const file = fileInput.current.files[0];
+
+    // Show profile image in thumbnail
+    const reader = new FileReader();
+    reader.onload = ((aImg) => {
+      return (e) => {
+        aImg.src = e.target.result;
+      };
+    })(image.current);
+    reader.readAsDataURL(file);
+
+    // Send file to parent component
+    onChange(file);
   }
 
   if (inEditState) {
@@ -42,7 +55,7 @@ const ProfileImage = ({imgUrl, inEditState, width, height, onChange}: Props) => 
             onChange={handleChange}
           />
         </div>
-        <img src={imgUrl} className={"image"}/>
+        <img src={imgUrl} className={"image"} ref={image}/>
       </Container>
     );
   }

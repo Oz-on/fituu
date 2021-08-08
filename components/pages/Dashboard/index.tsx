@@ -15,11 +15,10 @@ import ProfileImage from '../../organisms/ProfileImage';
 type DashboardPanelProps = {
   session: Object
   email: string;
-  profilePictureUrl: string;
   userData: UserDataProps;
 }
 
-const Dashboard = ({session, email, userData, profilePictureUrl}: DashboardPanelProps) => {
+const Dashboard = ({session, email, userData}: DashboardPanelProps) => {
   return (
     <div className={'page'}>
     <Header session={session} alternative={true} />
@@ -30,7 +29,7 @@ const Dashboard = ({session, email, userData, profilePictureUrl}: DashboardPanel
         <FirstRow>
           <RowContainer>
             <ProfileImage 
-              imgUrl={profilePictureUrl} 
+              imgUrl={userData.profilePhoto.url} 
               width={'80px'} 
               height={'80px'} 
               inEditState={false} 

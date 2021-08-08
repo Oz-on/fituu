@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -13,7 +14,6 @@ import Header from '../../organisms/Header/container';
 import ActionButton from '../../atoms/ActionBtn';
 import {mapTagToBool, mapTagToTitle, mapUserTypeToInputId} from '../../../lib';
 import {useUserDataDispatch, UserDataEditionInputs, UserDataProps} from '../../../lib/contexts/UserDataProvider';
-import { useRouter } from 'next/dist/client/router';
 import ProfileImage from '../../organisms/ProfileImage';
 
 type Props = {
@@ -22,7 +22,7 @@ type Props = {
 }
 
 const EditDataPanel = ({session, userData}: Props) => {
-  const router = useRouter();
+  const [profileImageFile, setProfileImageFile] = useState(null);
   const {updateUserData} = useUserDataDispatch();
   const tags = mapTagToBool(userData.tags);
 
@@ -38,15 +38,12 @@ const EditDataPanel = ({session, userData}: Props) => {
     }
   });
 
-  const successCallback = () => {
-    router.replace('/dashboard/my-data/');
-  }
-
   const onSubmit: SubmitHandler<UserDataEditionInputs> = data => {
-    updateUserData(userData, data, successCallback);
+    updateUserData(userData, data, profileImageFile);
   };
 
-  const handleChange = (file) => {
+  const handleChange = (file: File) => {
+    setProfileImageFile(file)
   } 
 
 	return (
@@ -65,8 +62,8 @@ const EditDataPanel = ({session, userData}: Props) => {
             <FullWidthContainer>
               <ProfileImage 
                 inEditState={true} 
-                imgUrl={"https://gravatar.com/avatar/d496b8bf36092d7d0796cf0cb1de8b27"} 
-                onChange={handleChange} 
+                imgUrl={userData.profilePhoto.url} 
+                onChange={handleChange}
                 width={"100px"} 
                 height={"100px"}
               />

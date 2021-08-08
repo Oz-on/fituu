@@ -4,6 +4,7 @@ import { useSession } from "next-auth/client"
 ;
 import { fetcherWithToken, API_BASE_URL } from "../api";
 import {getTagsArr, mapUserType} from '../';
+import { useRouter } from "next/dist/client/router";
 
 
 export type TagProps = {
@@ -18,7 +19,9 @@ export type UserDataProps = {
   city: string | null;
   region: string | null;
   tags: Array<TagProps>;
-  profilePhotoUrl: string;
+  profilePhoto: {
+    url: string
+  };
   description: string;
   certificates: string;
   type: string;
@@ -65,7 +68,7 @@ type Dispatch = (action: ActionProps) => void;
 
 type DispatchContextProps = {
   dispatch: Dispatch;
-  updateUserData: (currentData: UserDataProps, formData: UserDataEditionInputs, successCallback: Function) => void;
+  updateUserData: (currentData: UserDataProps, formData: UserDataEditionInputs, profileImageFile: File) => void;
 }
 
 const ACTIONS = {
@@ -80,7 +83,9 @@ const defaultState: UserDataProps = {
   city: null,
   region: null,
   tags: [],
-  profilePhotoUrl: '',
+  profilePhoto: {
+    url: '',
+  },
   description: '',
   certificates: '',
   type: '',
@@ -140,10 +145,11 @@ const userDataReducer = (state: UserDataProps, action: ActionProps) => {
 const UserDataProvider = ({children, accessToken}: ProviderProps) => {
   const [state, dispatch] = useReducer(userDataReducer, defaultState);
 
-  console.log('creating provider');
+  const router = useRouter();
 
   // It updates user data
-  const updateUserData = async (currentData: UserDataProps, formData: UserDataEditionInputs, successCallback: Function): Promise<void> => {
+  const updateUserData = async (currentData: UserDataProps, formData: UserDataEditionInputs, profileImageFile: File | null): Promise<void> => {
+
     const {fullName, type, description, city, ...tags} = formData;
     const [firstName, lastName] = formData.fullName.split(' ');
   
@@ -155,21 +161,42 @@ const UserDataProvider = ({children, accessToken}: ProviderProps) => {
       type: mapUserType(type),
       tags: getTagsArr(tags),
     }
+
+    const data = new FormData();
+
+    data.append('firstName', firstName);
+    data.append('lastName', lastName);
+    data.append('description', description);
+    data.append('type', mapUserType(type).toString());
+    getTagsArr(tags).forEach(tag => {
+      data.append('tags', tag.toString());
+    });
+
+    if (profileImageFile) {
+      data.append('profilePhoto', profileImageFile, profileImageFile.name);
+    }
   
     // update data
     mutate(`${API_BASE_URL}/user`, {...currentData, ...dataToSend}, false);
-  
-    await fetch(`${API_BASE_URL}/user/update/`, {
-      method: "PATCH",
-      headers: {
-        "Authorization": `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSend),
-    })
-  
-    mutate(`${API_BASE_URL}/user`);
-    successCallback();
+    
+    let response: Response;
+    try {
+      response = await fetch(`${API_BASE_URL}/user/update/`, {
+        method: "PATCH",
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        },
+        body: data,
+      })
+    } catch (error) {
+      console.error('Error occured while uploading user data: ', error);
+      return;
+    }
+
+    if (response && response.status < 400) {
+      mutate(`${API_BASE_URL}/user`);
+      router.replace('/dashboard/my-data');
+    }
   }
 
   return (

@@ -127,7 +127,7 @@ export const useUser = (id?: number) => {
   return {
     user: data,
     isLoading: !error && !data,
-    isError: error,
+    error: error,
   };
 }
 

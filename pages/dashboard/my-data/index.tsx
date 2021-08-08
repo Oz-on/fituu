@@ -1,16 +1,24 @@
-import { useSession, getSession } from "next-auth/client";
+import { Session } from "next-auth";
+import {getSession, signOut } from "next-auth/client";
 import Head from "next/head";
 
 import DataPanel from "../../../components/pages/DataPanel";
+import { ERROR_CODES } from "../../../lib";
 import { useUser } from "../../../lib/contexts/UserDataProvider";
 
-const DataPage = () => {
-	const [session, loading] = useSession();
-	const {user, isLoading} = useUser(null);
+type Props = {
+	session: Session;
+}
+const DataPage = ({session}: Props) => {
+	const {user, isLoading, error} = useUser(null);
 
-	if (loading || isLoading) {
+	if (isLoading) {
 		return null;
 	}
+
+	if (error && error.message === ERROR_CODES.authError) {
+    signOut();
+  }
 
   return (
 		<>
@@ -29,15 +37,15 @@ const DataPage = () => {
 export default DataPage;
 
 export async function getServerSideProps(context) {
-  const {res} = context;
   const session = await getSession(context);
 
   if (!session) {
-    res.writehead(302, {
-      Location: '/',
-    });
-
-    return res.end();
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
   }
 
   return {

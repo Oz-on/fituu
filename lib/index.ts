@@ -1,4 +1,11 @@
 import {TagProps} from './contexts/UserDataProvider';
+
+export const ERROR_CODES = {
+  authError: 'authError',
+  applicationError: 'applicationError',
+  serverError: 'serverError',
+};
+
 export const mapTagToTitle = (id: string): string => {
   switch(id) {
     case '1':

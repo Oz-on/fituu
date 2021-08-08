@@ -1,19 +1,28 @@
 import Head from "next/head";
-import {getSession, useSession} from "next-auth/client";
+import {getSession, signOut,} from "next-auth/client";
 
 import DashboardPanel from "../../components/pages/Dashboard";
 
 import { useUser } from "../../lib/contexts/UserDataProvider";
+import { ERROR_CODES } from "../../lib";
+import { Session } from "next-auth";
 
-const Dashboard = () => {
-  const [session, loading] = useSession();
-  const {user, isLoading} = useUser();
+type Props = {
+  session: Session;
+}
 
-  if (isLoading || loading) {
+const Dashboard = ({session}: Props) => {
+  const {user, isLoading, error} = useUser();
+
+  if (isLoading) {
     return null;
   }
 
-  console.log('user: ', user);
+  if (error && error.message === ERROR_CODES.authError) {
+    signOut();
+  }
+
+  // If user name and type is null redirect to data completion page
 
   return (
     <>
@@ -22,8 +31,7 @@ const Dashboard = () => {
       </Head>
       <DashboardPanel 
         session={session}
-        email={'oskarad.2000@gmail.com'} 
-        profilePictureUrl={'https://gravatar.com/avatar/d496b8bf36092d7d0796cf0cb1de8b27'}
+        email={'oskarad.2000@gmail.com'}
         userData={user} 
       />
     </>
@@ -33,15 +41,15 @@ const Dashboard = () => {
 export default Dashboard;
 
 export async function getServerSideProps(context) {
-  const {res} = context;
   const session = await getSession(context);
 
   if (!session) {
-    res.writehead(302, {
-      Location: '/',
-    });
-
-    return res.end();
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
   }
 
   return {

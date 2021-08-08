@@ -1,16 +1,24 @@
 import Head from "next/head";
-import { useSession, getSession } from "next-auth/client";
+import { getSession, signOut } from "next-auth/client";
 
 import EditDataPanel from "../../../components/pages/EditDataPanel";
 import { useUser } from "../../../lib/contexts/UserDataProvider";
+import { ERROR_CODES } from "../../../lib";
+import { Session } from "next-auth";
 
+type Props = {
+  session: Session;
+}
 
-const EditDataPage = () => {
-  const [session, loading] = useSession();
-  const {user, isLoading} = useUser(null);
+const EditDataPage = ({session}: Props) => {
+  const {user, isLoading, error} = useUser(null);
 
-  if (loading || isLoading) {
+  if (isLoading) {
     return null;
+  }
+
+  if (error && error.message === ERROR_CODES.authError) {
+    signOut();
   }
 
   return (
@@ -26,15 +34,15 @@ const EditDataPage = () => {
 export default EditDataPage;
 
 export async function getServerSideProps(context) {
-  const {res} = context;
   const session = await getSession(context);
 
   if (!session) {
-    res.writehead(302, {
-      Location: '/',
-    });
-
-    return res.end();
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
   }
 
   return {

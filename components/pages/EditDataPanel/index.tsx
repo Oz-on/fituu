@@ -14,6 +14,7 @@ import ActionButton from '../../atoms/ActionBtn';
 import {mapTagToBool, mapTagToTitle, mapUserTypeToInputId} from '../../../lib';
 import {useUserDataDispatch, UserDataEditionInputs, UserDataProps} from '../../../lib/contexts/UserDataProvider';
 import { useRouter } from 'next/dist/client/router';
+import ProfileImage from '../../organisms/ProfileImage';
 
 type Props = {
   session: Object,
@@ -35,7 +36,6 @@ const EditDataPanel = ({session, userData}: Props) => {
       '3': tags['3'],
       '4': tags['4'],
     }
-
   });
 
   const successCallback = () => {
@@ -45,6 +45,9 @@ const EditDataPanel = ({session, userData}: Props) => {
   const onSubmit: SubmitHandler<UserDataEditionInputs> = data => {
     updateUserData(userData, data, successCallback);
   };
+
+  const handleChange = (file) => {
+  } 
 
 	return (
     <div className={'page'}>
@@ -59,6 +62,15 @@ const EditDataPanel = ({session, userData}: Props) => {
             <SectionTitle>Twoje dane</SectionTitle>
           </RowContainer>
           <Form onSubmit={handleSubmit(onSubmit)}>
+            <FullWidthContainer>
+              <ProfileImage 
+                inEditState={true} 
+                imgUrl={"https://gravatar.com/avatar/d496b8bf36092d7d0796cf0cb1de8b27"} 
+                onChange={handleChange} 
+                width={"100px"} 
+                height={"100px"}
+              />
+            </FullWidthContainer>
             <div>
               <InputContainer>
                 <Label>Email</Label>

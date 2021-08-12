@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TitleRow, Paper } from "./shared";
 import { useForm, Controller } from "react-hook-form";
 import CustomSelect from "../../molecules/Select";
+import useExercise from "../../lib/useExercise";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,18 +34,27 @@ const useStyles = makeStyles((theme) => ({
 
 const NewExercise = () => {
   const classes = useStyles();
-  const { handleSubmit, control, reset } = useForm();
-  const onSubmit = (data) => console.log(data);
-
+  const router = useRouter();
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    handleSubmitEwercise(data, "POST");
+    router.push("/library/exercises");
+  };
+  const { patterns, types, bodyParts, handleSubmitEwercise } = useExercise();
   return (
     <>
       <TitleRow>
-        <h2>Add new exercise</h2>
+        <h2>Dodaj nowe ćwiczenie</h2>
       </TitleRow>
       <Paper>
         <div className={classes.root}>
           <Controller
-            name="exerciseName"
+            name="name"
             control={control}
             defaultValue={""}
             rules={{ required: "Nazwa cwiczenia jest wymagana. " }}
@@ -54,6 +65,8 @@ const NewExercise = () => {
                 style={{ margin: 8 }}
                 placeholder="Nazwa ćwiczenia"
                 fullWidth
+                error={errors.name}
+                helperText={errors.name?.message}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true,
@@ -65,7 +78,7 @@ const NewExercise = () => {
             )}
           />
           <Controller
-            name="mediaURL"
+            name="mediaUrl"
             control={control}
             defaultValue={""}
             rules={{ required: false }}
@@ -76,6 +89,8 @@ const NewExercise = () => {
                 style={{ margin: 8 }}
                 placeholder="Wpisz tuatj link do wideo ćwiczenia"
                 fullWidth
+                error={errors.mediaUrl}
+                helperText={errors.mediaUrl?.message}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true,
@@ -100,6 +115,8 @@ const NewExercise = () => {
                 multiline
                 rows={4}
                 fullWidth
+                error={errors.description}
+                helperText={errors.description?.message}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true,
@@ -116,7 +133,7 @@ const NewExercise = () => {
             render={({ field: { onChange, value } }) => (
               <CustomSelect
                 onChange={onChange}
-                options={mockOptions}
+                options={patterns}
                 name="patterns"
                 label="Patterny"
               />
@@ -128,20 +145,20 @@ const NewExercise = () => {
             render={({ field: { onChange, value } }) => (
               <CustomSelect
                 onChange={onChange}
-                options={mockOptions}
+                options={types}
                 name="types"
                 label="Typ ćwiczenia"
               />
             )}
           />
           <Controller
-            name="primaryMuscles"
+            name="bodyParts"
             control={control}
             render={({ field: { onChange, value } }) => (
               <CustomSelect
                 onChange={onChange}
-                options={mockOptions}
-                name="primaryMuscles"
+                options={bodyParts}
+                name="bodyParts"
                 label="Glowne partie mięśniowe"
               />
             )}
@@ -158,13 +175,3 @@ const NewExercise = () => {
 };
 
 export default NewExercise;
-
-const mockOptions = [
-  { value: 1, label: "TEST1" },
-  { value: 2, label: "TEST 2" },
-  { value: 3, label: "TEST 3" },
-  { value: 4, label: "TEST 4" },
-  { value: 5, label: "TEST 5" },
-  { value: 6, label: "TEST 6" },
-  { value: 7, label: "TEST 7" },
-];

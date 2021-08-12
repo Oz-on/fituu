@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TitleRow, Paper } from "./shared";
 import { useForm, Controller } from "react-hook-form";
 import CustomSelect from "../../molecules/Select";
+import useExercise from "../../lib/useExercise";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,9 +33,32 @@ const useStyles = makeStyles((theme) => ({
 
 const EditExercise = ({ exercise }) => {
   const classes = useStyles();
-  const { handleSubmit, control, reset } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const router = useRouter();
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => handleSubmitEwercise(data, "PATCH", exercise.id);
+  const {
+    bodyParts,
+    types,
+    patterns,
+    formatOptions,
+    handleSubmitEwercise,
+    handleDeleteExercise,
+  } = useExercise();
 
+  const deleteExercise = async () => {
+    // alert("Czy napewno chcesz usunąć te ćwiczenie?")
+    if (window.confirm("Czy napewno chcesz usunąć te ćwiczenie?")) {
+      await handleDeleteExercise(exercise.id);
+      //@ts-ignore
+      router.push("/library/exercises");
+    } else {
+    }
+  };
   return (
     <>
       <TitleRow>
@@ -42,9 +67,9 @@ const EditExercise = ({ exercise }) => {
       <Paper>
         <div className={classes.root}>
           <Controller
-            name="exerciseName"
+            name="name"
             control={control}
-            defaultValue={exercise.exerciseName}
+            defaultValue={exercise.name}
             rules={{ required: "Nazwa cwiczenia jest wymagana. " }}
             render={({ field: { onChange, value } }) => (
               <TextField
@@ -54,6 +79,8 @@ const EditExercise = ({ exercise }) => {
                 placeholder="Nazwa ćwiczenia"
                 fullWidth
                 margin="normal"
+                error={errors.name}
+                helperText={errors.name?.message}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -64,9 +91,9 @@ const EditExercise = ({ exercise }) => {
             )}
           />
           <Controller
-            name="mediaURL"
+            name="mediaUrl"
             control={control}
-            defaultValue={exercise.mediaURL}
+            defaultValue={exercise.mediaUrl}
             rules={{ required: false }}
             render={({ field: { onChange, value } }) => (
               <TextField
@@ -75,6 +102,8 @@ const EditExercise = ({ exercise }) => {
                 style={{ margin: 8 }}
                 placeholder="Wpisz tuatj link do wideo ćwiczenia"
                 fullWidth
+                error={errors.mediaUrl}
+                helperText={errors.mediaUrl?.name}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true,
@@ -98,6 +127,8 @@ const EditExercise = ({ exercise }) => {
                 placeholder=""
                 multiline
                 rows={4}
+                error={errors.description}
+                helperText={errors.description?.message}
                 fullWidth
                 margin="normal"
                 InputLabelProps={{
@@ -115,10 +146,10 @@ const EditExercise = ({ exercise }) => {
             render={({ field: { onChange, value } }) => (
               <CustomSelect
                 onChange={onChange}
-                options={mockOptions}
+                options={patterns}
                 name="patterns"
                 label="Patterny"
-                defaultValue={exercise.patterns}
+                defaultValue={formatOptions(exercise.patterns)}
               />
             )}
           />
@@ -128,31 +159,32 @@ const EditExercise = ({ exercise }) => {
             render={({ field: { onChange, value } }) => (
               <CustomSelect
                 onChange={onChange}
-                options={mockOptions}
+                options={types}
                 name="types"
                 label="Typ ćwiczenia"
-                defaultValue={exercise.types}
+                defaultValue={formatOptions(exercise.types)}
               />
             )}
           />
           <Controller
-            name="primaryMuscles"
+            name="bodyParts"
             control={control}
             render={({ field: { onChange, value } }) => (
               <CustomSelect
                 onChange={onChange}
-                options={mockOptions}
-                name="primaryMuscles"
+                options={bodyParts}
+                name="bodyParts"
                 label="Glowne partie mięśniowe"
-                defaultValue={exercise.primaryMuscles}
+                defaultValue={formatOptions(exercise.bodyParts, true)}
               />
             )}
           />
         </div>
         <TitleRow margin={"20px 10px"}>
           <Button primary onClick={handleSubmit(onSubmit)}>
-            Save exercise
+            Zapisz ćwiczenie
           </Button>
+          <Button onClick={deleteExercise}>Usuń ćwiczenie</Button>
         </TitleRow>
       </Paper>
     </>
@@ -160,13 +192,3 @@ const EditExercise = ({ exercise }) => {
 };
 
 export default EditExercise;
-
-const mockOptions = [
-  { value: 1, label: "TEST1" },
-  { value: 2, label: "TEST 2" },
-  { value: 3, label: "TEST 3" },
-  { value: 4, label: "TEST 4" },
-  { value: 5, label: "TEST 5" },
-  { value: 6, label: "TEST 6" },
-  { value: 7, label: "TEST 7" },
-];

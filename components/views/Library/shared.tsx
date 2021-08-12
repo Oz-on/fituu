@@ -134,3 +134,10 @@ export const Table = styled.div`
     }
   }
 `;
+
+export const ErrorMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

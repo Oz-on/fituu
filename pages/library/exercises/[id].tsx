@@ -1,6 +1,7 @@
 import PanelTemplate from "../../../components/templates/PanelTemplate";
 import EditExercise from "../../../components/views/Library/EditExercise";
 import { getSession } from "next-auth/client";
+import { fetcher, fetcherWithToken } from "../../../components/lib/api";
 
 const ExercisesPage = ({ exercise }) => {
   return (
@@ -13,7 +14,8 @@ const ExercisesPage = ({ exercise }) => {
 export default ExercisesPage;
 
 export async function getServerSideProps(context) {
-  const { res } = context;
+  const { res, query } = context;
+
   const session = await getSession(context);
 
   if (!session) {
@@ -24,19 +26,16 @@ export async function getServerSideProps(context) {
     return res.end();
   }
 
+  const exercise = await fetcherWithToken(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/exercise/${query.id}`,
+    //@ts-ignore
+    session.accessToken
+  );
+
   return {
     props: {
       session,
-      exercise: {
-        id: 1,
-        exerciseName: "PUSH UP",
-        mediaURL: "www.google.com",
-        description:
-          "This is a preety cool exercise for your chest. Do this!!!",
-        patterns: [{ value: 1, label: "PUSH" }],
-        types: [{ value: 1, label: "GYMNASTIC" }],
-        primaryMuscles: [{ value: 1, label: "TRICEPS" }],
-      },
+      exercise,
     },
   };
 }

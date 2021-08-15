@@ -9,10 +9,15 @@ export default {
   title: "Components/Templates/MainTemplate",
 } as Meta;
 const Template = (args) => (
-  <MainTemplate>
+  <MainTemplate {...args}>
     <>
       <p>hello</p>
     </>
   </MainTemplate>
 );
 export const Default = Template.bind({});
+Default.args = {
+  session: {},
+  alternativeHeader: true,
+};
+

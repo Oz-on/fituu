@@ -1,52 +1,46 @@
 import styled from 'styled-components';
-import {useSession} from 'next-auth/client';
 
-import PageContainer from '../../atoms/PageContainer';
-import MainPanelContainer from '../../atoms/MainPanelContainer';
 import SectionTitle from '../../atoms/SectionTitle';
-import Image from '../../atoms/Image';
 import ActionButton from '../../atoms/ActionBtn';
 import StatsCard from '../../organisms/StatsCard';
-import DataCard, {DataCardProps} from '../../organisms/DataCard';
-import Nav from '../../organisms/Nav';
-import Header from '../../organisms/Header/container';
+import DataCard from '../../organisms/DataCard';
+
+import {UserDataProps} from '../../../lib/contexts/UserDataProvider';
+import ProfileImage from '../../organisms/ProfileImage';
 
 type DashboardPanelProps = {
-  session: Object
-  email: string;
-  profilePictureUrl: string;
-  userData: DataCardProps;
+  userData: UserDataProps;
 }
 
-const Dashboard = ({session, email, userData, profilePictureUrl}: DashboardPanelProps) => {
+const Dashboard = ({userData}: DashboardPanelProps) => {
   return (
-    <div className={'page'}>
-    <Header session={session} alternative={true} />
-    <PageContainer>
-      <Nav />
-      <MainPanelContainer>
-        <SectionTitle>dashboard</SectionTitle>
-        <FirstRow>
-          <RowContainer>
-            <Image source={profilePictureUrl} width={80} height={80} />
-            <GreetingText>Witaj, {email}</GreetingText>
-          </RowContainer>
-          <ActionButton 
-            primary 
-            onClick={() => {}}
-          >
-            + Dodaj nowego klienta
-          </ActionButton>
-        </FirstRow>
-        <SecondRow>
-          <StatsCard title={'Liczba Wyświetleń dziennie'} value={26} />
-          <StatsCard title={'Liczba wyświetleń miesięcznie'} value={3450}/>
-          <StatsCard title={'Twoja ocena'} value={5} />
-        </SecondRow>
-        <DataCard {...userData} />
-      </MainPanelContainer>
-    </PageContainer>
-    </div>
+    <>
+      <SectionTitle>dashboard</SectionTitle>
+      <FirstRow>
+        <RowContainer>
+          <ProfileImage 
+            imgUrl={userData.profilePhoto ? userData.profilePhoto.url : ''} 
+            width={'80px'} 
+            height={'80px'} 
+            inEditState={false} 
+          />
+          <GreetingText>Witaj, {userData.firstName}</GreetingText>
+        </RowContainer>
+        <ActionButton 
+          primary 
+          onClick={() => {}}
+          type={'button'}
+        >
+          + Dodaj nowego klienta
+        </ActionButton>
+      </FirstRow>
+      <SecondRow>
+        <StatsCard title={'Liczba Wyświetleń dziennie'} value={26} />
+        <StatsCard title={'Liczba wyświetleń miesięcznie'} value={3450}/>
+        <StatsCard title={'Twoja ocena'} value={5} />
+      </SecondRow>
+      <DataCard userData={userData} />
+    </>
   );
 };
 

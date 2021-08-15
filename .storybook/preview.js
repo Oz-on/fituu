@@ -1,6 +1,6 @@
 import { ThemeProvider } from "styled-components";
 import { theme } from "../theme";
-
+import { RouterContext } from "next/dist/next-server/lib/router-context";
 export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
@@ -11,6 +11,9 @@ export const decorators = [
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  nextRouter: {
+    Provider: RouterContext.Provider,
+  },
   controls: {
     matchers: {
       color: /(background|color)$/i,

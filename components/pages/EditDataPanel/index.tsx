@@ -1,31 +1,155 @@
+import {useState} from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox, {CheckboxProps} from '@material-ui/core/Checkbox';
-import {useForm, SubmitHandler} from 'react-hook-form';
+import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 
-import MainPanelContainer from '../../atoms/MainPanelContainer';
 import SectionTitle from '../../atoms/SectionTitle';
-import PageContainer from '../../atoms/PageContainer';
+import ActionButton from '../../atoms/ActionBtn';
+import {mapTagToBool, mapTagToTitle, mapUserTypeToInputId} from '../../../lib';
+import {useUserDataDispatch, UserDataEditionInputs, UserDataProps} from '../../../lib/contexts/UserDataProvider';
+import ProfileImage from '../../organisms/ProfileImage';
 
-import Nav from '../../organisms/Nav';
-import Header from '../../organisms/Header/container';
-
-type Inputs = {
-  fullName: string,
-  localization: string,
-  specialization: string,
-  category: string,
-  aboutMe: string,
+type Props = {
+  session: Object,
+  userData: UserDataProps
 }
+
+const EditDataPanel = ({session, userData}: Props) => {
+  const [profileImageFile, setProfileImageFile] = useState(null);
+  const {updateUserData} = useUserDataDispatch();
+  const tags = mapTagToBool(userData.tags);
+
+  const {control, register, handleSubmit, formState: {errors}} = useForm<UserDataEditionInputs>({
+    defaultValues: {
+      fullName: `${userData.firstName} ${userData.lastName}`,
+      city: userData.city,
+      type: mapUserTypeToInputId(userData.type),
+      '1': tags['1'],
+      '2': tags['2'],
+      '3': tags['3'],
+      '4': tags['4'],
+    }
+  });
+
+  const onSubmit: SubmitHandler<UserDataEditionInputs> = data => {
+    updateUserData(userData, data, profileImageFile);
+  };
+
+  const handleChange = (file: File) => {
+    setProfileImageFile(file)
+  } 
+
+	return (
+    <>
+      <RowContainer>
+        <Link href={'/my-data'}>
+          <BackLink>Cofnij</BackLink>
+        </Link>
+        <SectionTitle>Twoje dane</SectionTitle>
+        </RowContainer>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <FullWidthContainer>
+          <ProfileImage 
+            inEditState={true} 
+            imgUrl={userData.profilePhoto ? userData.profilePhoto.url : ''} 
+            onChange={handleChange}
+            width={"100px"} 
+            height={"100px"}
+          />
+        </FullWidthContainer>
+        <div>
+          <InputContainer>
+            <Label>Email</Label>
+            <Input disabled defaultValue={userData.email} type={'text'}/>
+          </InputContainer>
+          <InputContainer>
+            <Label>Miasto</Label>
+            <Input {...register('city', {required: true})} type={'text'} defaultValue={userData.city} />
+          </InputContainer>
+        </div>
+        <div>
+          <InputContainer>
+            <Label>imie i nazwisko</Label>
+            <Input {...register('fullName', {required: true})} type={'text'} />
+          </InputContainer>
+          <InputContainer>
+            <Label>Specjalizacja</Label>
+            <Select {...register('type')} id="specialization">
+              <option value={'personal_trainer'}>Trener Personalny</option>
+              <option value={'nutritionist'}>Dietetyk</option>
+            </Select>
+          </InputContainer>
+        </div>
+        <FullWidthContainer>
+          <Label>Kategorie</Label>
+          <Categories>
+            <FormControlLabel
+              control={
+                <Controller 
+                  name="1"
+                  control={control}
+                  defaultValue={tags[1]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[1]} defaultChecked={tags[1]}/>}
+                />
+              }
+              label={mapTagToTitle('1')}
+            />
+            <FormControlLabel
+              defaultValue={tags['2']}
+              control={
+                <Controller 
+                  name="2"
+                  control={control}
+                  defaultValue={tags[2]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[2]} defaultChecked={tags[2]}/>}
+                />
+              }
+              label={mapTagToTitle('2')}
+            />
+            <FormControlLabel
+              control={
+                <Controller 
+                  name="3"
+                  control={control}
+                  defaultValue={tags[3]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[3]} defaultChecked={tags[3]}/>}
+                />
+              }
+              label={mapTagToTitle('3')}
+            />
+            <FormControlLabel
+              control={
+                <Controller 
+                  name="4"
+                  control={control}
+                  defaultValue={tags[4]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[4]} defaultChecked={tags[4]}/>}
+                />
+              }
+              label={mapTagToTitle('4')}
+            />
+          </Categories>
+        </FullWidthContainer>
+        <FullWidthContainer>
+          <Label>o tobie - opis</Label>
+          <MultilineInput type={'text'} {...register('description')} defaultValue={userData.description}/>
+        </FullWidthContainer>
+        <ActionButton primary={true} className={'submitBtn'} type={'submit'} >Zapisz zmiany</ActionButton>
+      </Form>
+    </>
+  );
+};
+
+export default EditDataPanel;
 
 const RowContainer = styled.div`
 	display: flex;
-	aling-items: center;
+	align-items: center;
 `;
 
 const BackLink = styled.a`
-  display: flex;
   color: #F7367D;
   text-decoration: underline;
   font-family: Roboto;
@@ -41,6 +165,12 @@ const Form = styled.form`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
   grid-column-gap: 20px;
+
+  .submitBtn {
+    justify-self: end;
+    grid-column-start: 2;
+    width: 50%;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -93,7 +223,6 @@ const MultilineInput = styled(Input)`
   min-height: 100px;
 `;
 
-
 const Categories = styled.div`
   background: #FFFFFF;
   box-sizing: border-box;
@@ -101,105 +230,3 @@ const Categories = styled.div`
   border-radius: 8px;
   padding: 5px;
 `;
-
-type Props = {
-  session: Object,
-}
-
-const EditDataPanel = ({session}: Props) => {
-
-  const {register, handleSubmit, formState: {errors}} = useForm<Inputs>();
-
-  const onSubmit: SubmitHandler<Inputs> = data => {
-    // TODO: Invoke an action to update all the data in the database
-  };
-
-	return (
-    <div className={'page'}>
-      <Header session={session} alternative={true}/>
-      <PageContainer>
-        <Nav />
-        <MainPanelContainer>
-          <RowContainer>
-            <Link href={'/dashboard/my-data'}>
-              <BackLink>Cofnij</BackLink>
-            </Link>
-            <SectionTitle>Twoje dane</SectionTitle>
-          </RowContainer>
-          <Form>
-            <div>
-              <InputContainer>
-                <Label>Email</Label>
-                <Input disabled />
-              </InputContainer>
-              <InputContainer>
-                <Label>Lokalizacja</Label>
-                <Input {...register('localization', {required: true})}/>
-              </InputContainer>
-            </div>
-            <div>
-              <InputContainer>
-                <Label>imie i nazwisko</Label>
-                <Input {...register('fullName', {required: true})}/>
-              </InputContainer>
-              <InputContainer>
-                <Label>Specjalizacja</Label>
-                <Select {...register('specialization')} id="specialization">
-                  <option value={'personal_trainer'}>Trener Personalny</option>
-                  <option value={'nutritionist'}>Dietetyk</option>
-                </Select>
-              </InputContainer>
-            </div>
-            <FullWidthContainer>
-              <Label>Kategorie</Label>
-              <Categories>
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="odchudzanie"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="modelowanie pośladków"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="budowa masy mięśniowej"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="taniec na rurze"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="treningi siłowe"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="tenis"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="pływanie"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="body building"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={false} onChange={() => {}} name={'checkedA'}/>}
-                  label="lekkoatletyka"
-                />
-              </Categories>
-            </FullWidthContainer>
-            <FullWidthContainer>
-              <Label>o tobie - opis</Label>
-              <MultilineInput />
-            </FullWidthContainer>
-          </Form>
-        </MainPanelContainer>
-      </PageContainer>
-    </div>
-	)
-};
-
-export default EditDataPanel;

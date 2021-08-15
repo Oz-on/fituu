@@ -1,17 +1,18 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 import styled from "styled-components";
 
 type ButtonProps = {
+  type?: "button" | "reset" | "submit";
   children?: ReactNode;
   onClick?: Function;
   primary?: boolean;
   isLink?: boolean,
 };
 
-const Button = ({ children, primary, onClick, isLink }: ButtonProps) => {
+const Button = forwardRef(({ type, children, primary, onClick, isLink}: ButtonProps, ref) => {
   if (isLink) {
     return (
-      <LinkWrapper primary={primary}>
+      <LinkWrapper primary={primary} ref={ref}>
         {children}
       </LinkWrapper>
     )
@@ -20,11 +21,12 @@ const Button = ({ children, primary, onClick, isLink }: ButtonProps) => {
     <ButtonWrapper 
       primary={primary} 
       onClick={onClick}
+      type={type}
     >
       {children}
     </ButtonWrapper>
   );
-}
+});
 
 const ButtonWrapper = styled.button<{primary?: boolean}>`
   display: block;

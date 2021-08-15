@@ -7,5 +7,6 @@ export const theme = {
     primaryLight: "#ecf0fe",
     fontPrimary: "#282e39",
     fontSecondary: "#d1d5e2",
+    chipPrimary: "#d7e5fd",
   },
 };

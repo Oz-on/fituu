@@ -1,11 +1,11 @@
 import PanelTemplate from "../../../components/templates/PanelTemplate";
 import Exercises from "../../../components/views/Library/Exercises";
-import { getSession, useSession } from "next-auth/client";
+import { getSession } from "next-auth/client";
 import { fetcherWithToken } from "../../../components/lib/api";
 
-const ExercisesPage = ({ req, exercises }) => {
+const ExercisesPage = ({ req, exercises, session }) => {
   return (
-    <PanelTemplate>
+    <PanelTemplate session={session}>
       <Exercises exercises={exercises} />
     </PanelTemplate>
   );

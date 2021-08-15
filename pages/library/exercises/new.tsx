@@ -1,10 +1,15 @@
 import PanelTemplate from "../../../components/templates/PanelTemplate";
 import NewExercise from "../../../components/views/Library/NewExercise";
 import { getSession } from "next-auth/client";
+import { Session } from "next-auth";
 
-const ExercisesPage = ({}) => {
+type Props = {
+  session: Session;
+}
+
+const ExercisesPage = ({session}: Props) => {
   return (
-    <PanelTemplate>
+    <PanelTemplate session={session}>
       <NewExercise />
     </PanelTemplate>
   );

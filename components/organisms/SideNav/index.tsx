@@ -1,26 +1,30 @@
 import { useRouter } from "next/dist/client/router";
 import React from "react";
-// import Link from "next/Link";
 import styled from "styled-components";
 
-import SideNavElement from "./SideNavElement";
+import SideNavElement from "../../atoms/NavElement.tsx";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 40px 0px;
+  padding: 40px 0px 0px 10px;
   background: #fff;
 `;
 
 const SideNav = () => {
   const { pathname } = useRouter();
-  const path = pathname ? pathname.split("/")[1] : "";
+  const path = pathname ? pathname.split("/")[0] : '';
   return (
     <Container>
       <SideNavElement
         selected={path == "dashboard"}
         destination={"/dashboard"}
         description={"mój panel"}
+      />
+      <SideNavElement
+        selected={path == "my-data"}
+        destination={"/my-data"}
+        description={"moje dane"}
       />
       <SideNavElement
         selected={path == "library"}

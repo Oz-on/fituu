@@ -9,10 +9,13 @@ export default {
   title: "Components/Templates/PanelTemplate",
 } as Meta;
 const Template = (args) => (
-  <PanelTemplate>
+  <PanelTemplate {...args}>
     <>
       <p>hello</p>
     </>
   </PanelTemplate>
 );
 export const Default = Template.bind({});
+Default.args = {
+  session: {},
+}

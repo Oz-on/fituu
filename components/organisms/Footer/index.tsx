@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import Logo from "../../Logo";
+import Logo from "../../atoms/Logo";
 import { AiFillFacebook, AiFillInstagram } from "react-icons/ai";
 
 const Footer = () => {

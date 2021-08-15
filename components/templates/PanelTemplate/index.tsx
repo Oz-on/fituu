@@ -1,10 +1,16 @@
+import { Session } from "next-auth";
 import styled from "styled-components";
-import SideNav from "../../SideNav";
+import SideNav from "../../organisms/SideNav";
 import MainTemplate from "../Main";
 
-const PanelTemplate = ({ children }) => {
+type Props = {
+  children: any;
+  session: Session;
+};
+
+const PanelTemplate = ({ children, session }: Props) => {
   return (
-    <MainTemplate>
+    <MainTemplate session={session} alternativeHeader={true}>
       <Wrapper>
         <SideNav />
         <Container>{children}</Container>

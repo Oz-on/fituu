@@ -3,9 +3,9 @@ import EditExercise from "../../../components/views/Library/EditExercise";
 import { getSession } from "next-auth/client";
 import { fetcher, fetcherWithToken } from "../../../components/lib/api";
 
-const ExercisesPage = ({ exercise }) => {
+const ExercisesPage = ({ exercise, session }) => {
   return (
-    <PanelTemplate>
+    <PanelTemplate session={session}>
       <EditExercise exercise={exercise} />
     </PanelTemplate>
   );

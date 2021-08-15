@@ -1,49 +1,57 @@
-import React from 'react';
-import Head from 'next/head';
-import {getSession} from 'next-auth/client';
-import styled from 'styled-components';
+import Head from "next/head";
+import {getSession, signOut,} from "next-auth/client";
 
-import Header from '../../components/AlternativeHeader';
-import SideNav from '../../components/SideNav';
-import DashboardPanel from '../../components/DashboardPanel';
+import DashboardPanel from "../../components/pages/Dashboard";
 
-const Page = styled.div`
-  height: 100vh;
-`;
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: auto auto;
-`;
+import { useUser } from "../../lib/contexts/UserDataProvider";
+import { ERROR_CODES } from "../../lib";
+import { Session } from "next-auth";
+import PanelTemplate from "../../components/templates/PanelTemplate";
 
-// This page should be secured
-const Dashboard = () => {
+type Props = {
+  session: Session;
+}
+
+const Dashboard = ({session}: Props) => {
+  const {user, isLoading, error} = useUser();
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (error && error.message === ERROR_CODES.authError) {
+    signOut();
+  }
+
+  // If user name and type is null or empty redirect to data completion page
+  if (user && user.type === '') {
+  }
+
+
   return (
-    <Page>
+    <>
       <Head>
         <title>Dashboard</title>
       </Head>
-      <Header />
-      <Container>
-        <SideNav/>
-        <DashboardPanel/>
-      </Container>
-    </Page>
+      <PanelTemplate session={session}>
+        <DashboardPanel userData={user} />
+      </PanelTemplate>
+    </>
   )
 };
 
 export default Dashboard;
 
 export async function getServerSideProps(context) {
-  const {res} = context;
   const session = await getSession(context);
 
   if (!session) {
-    res.writehead(302, {
-      Location: '/',
-    });
-
-    return res.end();
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
   }
 
   return {

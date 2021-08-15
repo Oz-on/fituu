@@ -1,11 +1,18 @@
 import styled from "styled-components";
-import Header from "../../Header";
+import Header from "../../organisms/Header/container";
 import Footer from "../../organisms/Footer";
+import { Session } from "next-auth";
 
-const MainTemplate = ({ children }) => {
+type Props = {
+  children: any;
+  session: Session;
+  alternativeHeader: boolean;
+};
+
+const MainTemplate = ({ children, session, alternativeHeader}: Props) => {
   return (
     <Container>
-      <Header />
+      <Header session={session} alternative={alternativeHeader} />
       <main>{children}</main>
       <Footer />
     </Container>

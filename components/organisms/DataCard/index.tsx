@@ -16,7 +16,7 @@ const DataCard = ({userData}: DataCardProps) => {
     <DataCardContainer>
       <RowContainer>
         <Title>Twoje dane</Title>
-          <Link href={'/dashboard/my-data/edit'}>
+          <Link href={'/my-data/edit'}>
             <EditLink>
               <EditIcon />
               Edytuj dane

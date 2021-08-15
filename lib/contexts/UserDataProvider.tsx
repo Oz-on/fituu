@@ -21,7 +21,7 @@ export type UserDataProps = {
   tags: Array<TagProps>;
   profilePhoto: {
     url: string
-  };
+  } | null;
   description: string;
   certificates: string;
   type: string;
@@ -29,9 +29,9 @@ export type UserDataProps = {
 export type RequestPatchUserData = {
   firstName?: string;
   lastName?: string;
-  city?: number;
+  city?: string;
   tags?: Array<number>;
-  profilePhoto?: any;
+  profilePhoto?: File;
   description?: string;
   certificates?: string;
   type?: number;

@@ -6,6 +6,7 @@ import DashboardPanel from "../../components/pages/Dashboard";
 import { useUser } from "../../lib/contexts/UserDataProvider";
 import { ERROR_CODES } from "../../lib";
 import { Session } from "next-auth";
+import PanelTemplate from "../../components/templates/PanelTemplate";
 
 type Props = {
   session: Session;
@@ -32,11 +33,9 @@ const Dashboard = ({session}: Props) => {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <DashboardPanel 
-        session={session}
-        email={'oskarad.2000@gmail.com'}
-        userData={user} 
-      />
+      <PanelTemplate session={session}>
+        <DashboardPanel userData={user} />
+      </PanelTemplate>
     </>
   )
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Nav from "./";
+import Nav from ".";
 
 export default {
   component: Nav,

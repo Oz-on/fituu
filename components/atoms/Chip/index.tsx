@@ -4,15 +4,21 @@ import styled from "styled-components";
 type ChipProps = {
   children?: ReactNode;
   margin?: string;
+  primary?: boolean;
 };
-const Chip = ({ children, margin }: ChipProps) => {
-  return <ChipWrapper margin={margin}>{children}</ChipWrapper>;
+const Chip = ({ children, margin, primary }: ChipProps) => {
+  return (
+    <ChipWrapper primary={primary} margin={margin}>
+      {children}
+    </ChipWrapper>
+  );
 };
 
 export default Chip;
 
-const ChipWrapper = styled.div<{ margin?: string }>`
-  background-color: ${({ theme }) => theme.colors.primaryLight};
+const ChipWrapper = styled.div<{ margin?: string; primary?: boolean }>`
+  background-color: ${({ theme, primary }) =>
+    primary ? theme.colors.chipPrimary : theme.colors.primaryLight};
   border-radius: 20px;
   display: flex;
   align-items: center;

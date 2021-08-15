@@ -1,37 +1,33 @@
+import { useRouter } from "next/dist/client/router";
 import React from "react";
 import styled from "styled-components";
 
 import SideNavElement from "../../atoms/NavElement.tsx";
 
-const Nav = () => {
-  return (
-    <NavWrapper>
-      <SideNavElement 
-        destination={"/dashboard"} 
-        description={"mój panel"} 
-      />
-      <SideNavElement
-        destination={"/dashboard/my-data"}
-        description={"moje dane"}
-      />
-      <SideNavElement
-        destination={"/dashboard/clients"}
-        description={"klienci"}
-      />
-      <SideNavElement
-        destination={"/dashboard/messages"}
-        description={"wiadomosći"}
-      />
-    </NavWrapper>
-  );
-};
-
-const NavWrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
-  padding-left: 40px;
+  padding: 40px 0px;
   background: #fff;
 `;
 
-export default Nav;
+const SideNav = () => {
+  const { pathname } = useRouter();
+  const path = pathname ? pathname.split("/")[1] : "";
+  return (
+    <Container>
+      <SideNavElement
+        selected={path == "dashboard"}
+        destination={"/dashboard"}
+        description={"mój panel"}
+      />
+      <SideNavElement
+        selected={path == "library"}
+        destination={"/library/exercises"}
+        description={"Biblioteka ćwiczeń"}
+      />
+    </Container>
+  );
+};
+
+export default SideNav;

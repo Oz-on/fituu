@@ -5,12 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox, {CheckboxProps} from '@material-ui/core/Checkbox';
 import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 
-import MainPanelContainer from '../../atoms/MainPanelContainer';
 import SectionTitle from '../../atoms/SectionTitle';
-import PageContainer from '../../atoms/PageContainer';
-
-import Nav from '../../organisms/Nav';
-import Header from '../../organisms/Header/container';
 import ActionButton from '../../atoms/ActionBtn';
 import {mapTagToBool, mapTagToTitle, mapUserTypeToInputId} from '../../../lib';
 import {useUserDataDispatch, UserDataEditionInputs, UserDataProps} from '../../../lib/contexts/UserDataProvider';
@@ -47,110 +42,104 @@ const EditDataPanel = ({session, userData}: Props) => {
   } 
 
 	return (
-    <div className={'page'}>
-      <Header session={session} alternative={true}/>
-      <PageContainer>
-        <Nav />
-        <MainPanelContainer>
-          <RowContainer>
-            <Link href={'/dashboard/my-data'}>
-              <BackLink>Cofnij</BackLink>
-            </Link>
-            <SectionTitle>Twoje dane</SectionTitle>
-          </RowContainer>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <FullWidthContainer>
-              <ProfileImage 
-                inEditState={true} 
-                imgUrl={userData.profilePhoto.url} 
-                onChange={handleChange}
-                width={"100px"} 
-                height={"100px"}
-              />
-            </FullWidthContainer>
-            <div>
-              <InputContainer>
-                <Label>Email</Label>
-                <Input disabled defaultValue={userData.email} type={'text'}/>
-              </InputContainer>
-              <InputContainer>
-                <Label>Miasto</Label>
-                <Input {...register('city', {required: true})} type={'text'} defaultValue={userData.city} />
-              </InputContainer>
-            </div>
-            <div>
-              <InputContainer>
-                <Label>imie i nazwisko</Label>
-                <Input {...register('fullName', {required: true})} type={'text'} />
-              </InputContainer>
-              <InputContainer>
-                <Label>Specjalizacja</Label>
-                <Select {...register('type')} id="specialization">
-                  <option value={'personal_trainer'}>Trener Personalny</option>
-                  <option value={'nutritionist'}>Dietetyk</option>
-                </Select>
-              </InputContainer>
-            </div>
-            <FullWidthContainer>
-              <Label>Kategorie</Label>
-              <Categories>
-                <FormControlLabel
-                  control={
-                    <Controller 
-                      name="1"
-                      control={control}
-                      defaultValue={tags[1]}
-                      render={({ field }) => <Checkbox {...field} defaultValue={tags[1]} defaultChecked={tags[1]}/>}
-                    />
-                  }
-                  label={mapTagToTitle('1')}
+    <>
+      <RowContainer>
+        <Link href={'/my-data'}>
+          <BackLink>Cofnij</BackLink>
+        </Link>
+        <SectionTitle>Twoje dane</SectionTitle>
+        </RowContainer>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <FullWidthContainer>
+          <ProfileImage 
+            inEditState={true} 
+            imgUrl={userData.profilePhoto ? userData.profilePhoto.url : ''} 
+            onChange={handleChange}
+            width={"100px"} 
+            height={"100px"}
+          />
+        </FullWidthContainer>
+        <div>
+          <InputContainer>
+            <Label>Email</Label>
+            <Input disabled defaultValue={userData.email} type={'text'}/>
+          </InputContainer>
+          <InputContainer>
+            <Label>Miasto</Label>
+            <Input {...register('city', {required: true})} type={'text'} defaultValue={userData.city} />
+          </InputContainer>
+        </div>
+        <div>
+          <InputContainer>
+            <Label>imie i nazwisko</Label>
+            <Input {...register('fullName', {required: true})} type={'text'} />
+          </InputContainer>
+          <InputContainer>
+            <Label>Specjalizacja</Label>
+            <Select {...register('type')} id="specialization">
+              <option value={'personal_trainer'}>Trener Personalny</option>
+              <option value={'nutritionist'}>Dietetyk</option>
+            </Select>
+          </InputContainer>
+        </div>
+        <FullWidthContainer>
+          <Label>Kategorie</Label>
+          <Categories>
+            <FormControlLabel
+              control={
+                <Controller 
+                  name="1"
+                  control={control}
+                  defaultValue={tags[1]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[1]} defaultChecked={tags[1]}/>}
                 />
-                <FormControlLabel
-                  defaultValue={tags['2']}
-                  control={
-                    <Controller 
-                      name="2"
-                      control={control}
-                      defaultValue={tags[2]}
-                      render={({ field }) => <Checkbox {...field} defaultValue={tags[2]} defaultChecked={tags[2]}/>}
-                    />
-                  }
-                  label={mapTagToTitle('2')}
+              }
+              label={mapTagToTitle('1')}
+            />
+            <FormControlLabel
+              defaultValue={tags['2']}
+              control={
+                <Controller 
+                  name="2"
+                  control={control}
+                  defaultValue={tags[2]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[2]} defaultChecked={tags[2]}/>}
                 />
-                <FormControlLabel
-                  control={
-                    <Controller 
-                      name="3"
-                      control={control}
-                      defaultValue={tags[3]}
-                      render={({ field }) => <Checkbox {...field} defaultValue={tags[3]} defaultChecked={tags[3]}/>}
-                    />
-                  }
-                  label={mapTagToTitle('3')}
+              }
+              label={mapTagToTitle('2')}
+            />
+            <FormControlLabel
+              control={
+                <Controller 
+                  name="3"
+                  control={control}
+                  defaultValue={tags[3]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[3]} defaultChecked={tags[3]}/>}
                 />
-                <FormControlLabel
-                  control={
-                    <Controller 
-                      name="4"
-                      control={control}
-                      defaultValue={tags[4]}
-                      render={({ field }) => <Checkbox {...field} defaultValue={tags[4]} defaultChecked={tags[4]}/>}
-                    />
-                  }
-                  label={mapTagToTitle('4')}
+              }
+              label={mapTagToTitle('3')}
+            />
+            <FormControlLabel
+              control={
+                <Controller 
+                  name="4"
+                  control={control}
+                  defaultValue={tags[4]}
+                  render={({ field }) => <Checkbox {...field} defaultValue={tags[4]} defaultChecked={tags[4]}/>}
                 />
-              </Categories>
-            </FullWidthContainer>
-            <FullWidthContainer>
-              <Label>o tobie - opis</Label>
-              <MultilineInput type={'text'} {...register('description')} defaultValue={userData.description}/>
-            </FullWidthContainer>
-            <ActionButton primary={true} className={'submitBtn'} type={'submit'} >Zapisz zmiany</ActionButton>
-          </Form>
-        </MainPanelContainer>
-      </PageContainer>
-    </div>
-	)
+              }
+              label={mapTagToTitle('4')}
+            />
+          </Categories>
+        </FullWidthContainer>
+        <FullWidthContainer>
+          <Label>o tobie - opis</Label>
+          <MultilineInput type={'text'} {...register('description')} defaultValue={userData.description}/>
+        </FullWidthContainer>
+        <ActionButton primary={true} className={'submitBtn'} type={'submit'} >Zapisz zmiany</ActionButton>
+      </Form>
+    </>
+  );
 };
 
 export default EditDataPanel;

@@ -2,9 +2,10 @@ import { Session } from "next-auth";
 import {getSession, signOut } from "next-auth/client";
 import Head from "next/head";
 
-import DataPanel from "../../../components/pages/DataPanel";
-import { ERROR_CODES } from "../../../lib";
-import { useUser } from "../../../lib/contexts/UserDataProvider";
+import DataPanel from "../../components/pages/DataPanel";
+import PanelTemplate from "../../components/templates/PanelTemplate";
+import { ERROR_CODES } from "../../lib";
+import { useUser } from "../../lib/contexts/UserDataProvider";
 
 type Props = {
 	session: Session;
@@ -25,11 +26,9 @@ const DataPage = ({session}: Props) => {
 			<Head>
 				<title>Data</title>
 			</Head>
-			<DataPanel 
-				session={session} 
-				userData={user}
-				offers={[]}
-			/>
+			<PanelTemplate session={session}>
+				<DataPanel userData={user} offers={[]}/>
+			</PanelTemplate>
 		</>
 	)
 };

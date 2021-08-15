@@ -1,4 +1,4 @@
-import Button from "../../Button";
+import Button from "../../atoms/Button";
 import { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";

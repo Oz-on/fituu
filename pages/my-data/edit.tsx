@@ -1,10 +1,11 @@
 import Head from "next/head";
 import { getSession, signOut } from "next-auth/client";
 
-import EditDataPanel from "../../../components/pages/EditDataPanel";
-import { useUser } from "../../../lib/contexts/UserDataProvider";
-import { ERROR_CODES } from "../../../lib";
+import EditDataPanel from "../../components/pages/EditDataPanel";
+import { useUser } from "../../lib/contexts/UserDataProvider";
+import { ERROR_CODES } from "../../lib";
 import { Session } from "next-auth";
+import PanelTemplate from "../../components/templates/PanelTemplate";
 
 type Props = {
   session: Session;
@@ -26,7 +27,9 @@ const EditDataPage = ({session}: Props) => {
       <Head>
         <title>Edit data</title>
       </Head>
-      <EditDataPanel session={session} userData={user}/>
+      <PanelTemplate session={session}>
+        <EditDataPanel session={session} userData={user}/>
+      </PanelTemplate>
     </>
   );
 };

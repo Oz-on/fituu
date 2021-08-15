@@ -7,4 +7,4 @@ export default {
   title: "Components/Atoms/EditIcon",
 };
 
-export const Default = () => <EditIcon />
+export const Default: React.VFC<{}> = () => <EditIcon />

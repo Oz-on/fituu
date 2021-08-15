@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProfileImage from './';
+import ProfileImage from '.';
 
 export default {
   title: 'Components/Organisms/ProfileImage',

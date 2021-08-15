@@ -13,8 +13,7 @@ const Container = styled.div`
 
 const SideNav = () => {
   const { pathname } = useRouter();
-  const pathElements = pathname ? pathname.split("/") : [];
-  const path = pathElements.length > 0 ? pathElements[pathElements.length - 1] : "";
+  const path = pathname ? pathname.split("/")[0] : '';
   return (
     <Container>
       <SideNavElement

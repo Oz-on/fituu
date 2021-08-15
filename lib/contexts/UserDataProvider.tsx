@@ -154,9 +154,10 @@ const UserDataProvider = ({children, accessToken}: ProviderProps) => {
     const [firstName, lastName] = formData.fullName.split(' ');
   
     // Format data to appropriate
-    const dataToSend: RequestPatchUserData = {
+    const dataMutation: RequestPatchUserData = {
       firstName: firstName,
       lastName: lastName,
+      city: city,
       description: description,
       type: mapUserType(type),
       tags: getTagsArr(tags),
@@ -167,6 +168,7 @@ const UserDataProvider = ({children, accessToken}: ProviderProps) => {
     data.append('firstName', firstName);
     data.append('lastName', lastName);
     data.append('description', description);
+    data.append('city', city);
     data.append('type', mapUserType(type).toString());
     getTagsArr(tags).forEach(tag => {
       data.append('tags', tag.toString());
@@ -177,7 +179,7 @@ const UserDataProvider = ({children, accessToken}: ProviderProps) => {
     }
   
     // update data
-    mutate(`${API_BASE_URL}/user`, {...currentData, ...dataToSend}, false);
+    mutate(`${API_BASE_URL}/user`, {...currentData, ...dataMutation}, false);
     
     let response: Response;
     try {

@@ -53,6 +53,7 @@ const ProfileImage = ({imgUrl, inEditState, width, height, onChange}: Props) => 
             className={"hidden-input"}
             ref={fileInput}
             onChange={handleChange}
+            data-testID={'profileImage'}
           />
         </div>
         <img src={imgUrl} className={"image"} ref={image}/>
@@ -61,7 +62,7 @@ const ProfileImage = ({imgUrl, inEditState, width, height, onChange}: Props) => 
   }
 
   return (
-    <Container width={width} height={height}>
+    <Container width={width} height={height} data-testID={'profileImage'}>
       <img src={imgUrl} className={"image"}/>
     </Container>
   );

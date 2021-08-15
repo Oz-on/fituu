@@ -22,7 +22,10 @@ const Dashboard = ({session}: Props) => {
     signOut();
   }
 
-  // If user name and type is null redirect to data completion page
+  // If user name and type is null or empty redirect to data completion page
+  if (user && user.type === '') {
+  }
+
 
   return (
     <>

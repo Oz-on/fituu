@@ -1,23 +1,25 @@
 /**
- * Component placed at the top of the page with 
+ * Component placed at the top of the page with
  * authentication buttons, logo and navigation
  */
 
-import React from 'react';
-import {signIn, signOut, useSession} from 'next-auth/client';
-import styled from 'styled-components';
-import Link from 'next/link';
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/client";
+import styled from "styled-components";
+import Link from "next/link";
 
-import Button from './Button';
-import Logo from './Logo';
+import Button from "./Button";
+import Logo from "./Logo";
 
 const StyledHeader = styled.header`
   display: flex;
-  flex-direction: 'row';
+  flex-direction: "row";
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 25px 50px;
+  box-shadow: -1px -2px 12px rgb(0 0 0 / 21%);
+  z-index: 999;
 `;
 
 const StyledNav = styled.nav`
@@ -28,38 +30,40 @@ const Header = () => {
   const [session, loading] = useSession();
   return (
     <StyledHeader>
-      <Link href={'/'}>
+      <Link href={"/"}>
         <a>
           <Logo />
         </a>
       </Link>
       <StyledNav>
-        {!session &&
+        {!session && (
           <>
             <Button>Zaloguj się</Button>
-            <Button 
-              primary 
-              onClick={() => signIn('cognito', {
-                callbackUrl: `${window.location.origin}/dashboard`
-              })}
+            <Button
+              primary
+              onClick={() =>
+                signIn("cognito", {
+                  callbackUrl: `${window.location.origin}/dashboard`,
+                })
+              }
             >
               Dołącz do nas
             </Button>
           </>
-        }
-        {session &&
+        )}
+        {session && (
           <>
-            <Link href={'/dashboard'}>
+            <Link href={"/dashboard"}>
               <a>
                 <Button>mój panel</Button>
               </a>
             </Link>
-            <Button>Wyloguj się</Button>
+            <Button onClick={() => signOut()}>Wyloguj się</Button>
           </>
-        }
+        )}
       </StyledNav>
     </StyledHeader>
-  )
+  );
 };
 
-export default Header
+export default Header;

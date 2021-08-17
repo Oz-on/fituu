@@ -11,8 +11,6 @@ const Template = (args) => <Dashboard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  session: {},
-  email: 'oskarad.2000@gmail.com',
   userData: {
     firstName: 'Janina',
     lastName: 'Kowalska',
@@ -29,4 +27,30 @@ Default.args = {
       url: 'https://gravatar.com/avatar/d496b8bf36092d7d0796cf0cb1de8b27'
     },
   },
+  clients: [
+    {
+      id: 1,
+      firstName: 'John',
+      lastName: 'Doe',
+      profilePhoto: {
+        url: ''
+      },
+    },
+    {
+      id: 2,
+      firstName: 'Jane',
+      lastName: 'Doe',
+      profilePhoto: {
+        url: ''
+      },
+    },
+    {
+      id: 3,
+      firstName: 'Jane',
+      lastName: 'Doe',
+      profilePhoto: {
+        url: ''
+      },
+    },
+  ]
 };

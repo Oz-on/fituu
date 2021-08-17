@@ -7,12 +7,14 @@ import DataCard from '../../organisms/DataCard';
 
 import {UserDataProps} from '../../../lib/contexts/UserDataProvider';
 import ProfileImage from '../../organisms/ProfileImage';
+import ClientsList from '../../organisms/ClientsList';
 
 type DashboardPanelProps = {
   userData: UserDataProps;
+  clients: [],
 }
 
-const Dashboard = ({userData}: DashboardPanelProps) => {
+const Dashboard = ({userData, clients}: DashboardPanelProps) => {
   return (
     <>
       <SectionTitle>dashboard</SectionTitle>
@@ -40,6 +42,8 @@ const Dashboard = ({userData}: DashboardPanelProps) => {
         <StatsCard title={'Twoja ocena'} value={5} />
       </SecondRow>
       <DataCard userData={userData} />
+      <SectionTitle>Podopieczni</SectionTitle>
+      <ClientsList clients={clients}/>
     </>
   );
 };

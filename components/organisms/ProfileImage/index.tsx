@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import { AddAPhoto } from "@material-ui/icons";
+import { AddAPhoto, AccountCircle } from "@material-ui/icons";
 import styled from "styled-components";
 
 type Props = {
@@ -56,14 +56,26 @@ const ProfileImage = ({imgUrl, inEditState, width, height, onChange}: Props) => 
             data-testID={'profileImage'}
           />
         </div>
-        <img src={imgUrl} className={"image"} ref={image}/>
+        {imgUrl === "" ?
+          <div className={"image"}>
+            <AccountCircle style={{color: "primary", fontSize: 50}} />
+          </div>
+          :
+          <img src={imgUrl} className={"image"} ref={image}/>
+        }
       </Container>
     );
   }
 
   return (
     <Container width={width} height={height} data-testID={'profileImage'}>
-      <img src={imgUrl} className={"image"}/>
+      {imgUrl === "" ? 
+        <div className={"image"}>
+          <AccountCircle style={{color: "primary", fontSize: 50}} />
+        </div>
+        :
+        <img src={imgUrl} className={"image"}/>
+      }
     </Container>
   );
 };
@@ -76,6 +88,9 @@ const Container = styled.div<{width: string; height: string, inEditState: boolea
   cursor: ${({inEditState}) => inEditState ? 'pointer' : 'arrow'};
 
   .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     overlay: hidden;

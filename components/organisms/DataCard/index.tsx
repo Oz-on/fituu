@@ -52,6 +52,7 @@ const DataCard = ({userData}: DataCardProps) => {
 export default DataCard;
 
 const Card = styled.div`
+  box-sizing: border-box;
   background: #FFFFFF;
   box-shadow: 0px 4px 8px 1px rgba(21, 29, 56, 0.12);
   border-radius: 8px;
@@ -63,7 +64,7 @@ const Row = styled.div`
 `;
 
 const DataCardContainer = styled(Card)`
-  width: 85%;
+  width: 100%;
   padding-left: 15px;
 `;
 

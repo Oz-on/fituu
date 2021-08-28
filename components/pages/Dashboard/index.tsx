@@ -16,18 +16,25 @@ type DashboardPanelProps = {
 
 const Dashboard = ({userData, clients}: DashboardPanelProps) => {
   return (
-    <>
+    <Container>
       <SectionTitle>dashboard</SectionTitle>
-      <FirstRow>
-        <RowContainer>
-          <ProfileImage 
-            imgUrl={userData.profilePhoto ? userData.profilePhoto.url : ''} 
-            width={'80px'} 
-            height={'80px'} 
-            inEditState={false} 
-          />
-          <GreetingText>Witaj, {userData.firstName}</GreetingText>
-        </RowContainer>
+      <RowContainer>
+        <ProfileImage 
+          imgUrl={userData.profilePhoto ? userData.profilePhoto.url : ''} 
+          width={'80px'} 
+          height={'80px'} 
+          inEditState={false} 
+        />
+        <GreetingText>Witaj, {userData.firstName}</GreetingText>
+      </RowContainer>
+      <RowContainer>
+        <StatsCard title={'Liczba wyświetleń dziennie'} value={26} />
+        <StatsCard title={'Liczba wyświetleń miesięcznie'} value={3450}/>
+        <StatsCard title={'Twoja ocena'} value={5} />
+      </RowContainer>
+      <DataCard userData={userData} />
+      <RowContainer withSpace={true}>
+        <SectionTitle>Klienci</SectionTitle>
         <ActionButton 
           primary 
           onClick={() => {}}
@@ -35,30 +42,20 @@ const Dashboard = ({userData, clients}: DashboardPanelProps) => {
         >
           + Dodaj nowego klienta
         </ActionButton>
-      </FirstRow>
-      <SecondRow>
-        <StatsCard title={'Liczba Wyświetleń dziennie'} value={26} />
-        <StatsCard title={'Liczba wyświetleń miesięcznie'} value={3450}/>
-        <StatsCard title={'Twoja ocena'} value={5} />
-      </SecondRow>
-      <DataCard userData={userData} />
-      <SectionTitle>Podopieczni</SectionTitle>
+      </RowContainer>
       <ClientsList clients={clients}/>
-    </>
+    </Container>
   );
 };
 
-const FirstRow = styled.div`
-  display: flex;
-  flex-direction: row;
+const Container = styled.div`
   width: 85%;
-  justify-content: space-between;
-  align-items: center;
 `;
 
-const SecondRow = styled.div`
+const RowContainer = styled.div<{withSpace: boolean}>`
   display: flex;
   flex-direction: row;
+  justify-content: ${({withSpace}) => withSpace ? 'space-between' : 'flex-start'};
   padding: 25px 0;
 `;
 
@@ -73,9 +70,5 @@ const GreetingText = styled.h2`
   margin-left: 20px;
 `;
 
-const RowContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
 
 export default Dashboard;

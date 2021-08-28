@@ -34,7 +34,7 @@ const Dashboard = ({session}: Props) => {
         <title>Dashboard</title>
       </Head>
       <PanelTemplate session={session}>
-        <DashboardPanel userData={user} />
+        <DashboardPanel userData={user} clients={[]}/>
       </PanelTemplate>
     </>
   )

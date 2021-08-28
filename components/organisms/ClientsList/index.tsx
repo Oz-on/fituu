@@ -11,6 +11,11 @@ type Props = {
 };
 
 const ClientsList = ({clients}: Props) => {
+  if (clients.length === 0) {
+    return <EmptyListContainer>
+      <p>Brak klientów</p>
+    </EmptyListContainer>
+  }
   return (
     <div>
       {clients.map(client => (
@@ -30,3 +35,15 @@ const ClientsList = ({clients}: Props) => {
 };
 
 export default ClientsList;
+
+const EmptyListContainer = styled.div`
+  width: 100%;
+  padding 20px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+
+  .empty-text {
+    
+  }
+`;

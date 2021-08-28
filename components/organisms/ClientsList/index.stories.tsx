@@ -37,3 +37,8 @@ Default.args = {
     },
   ]
 }
+
+export const EmptyList = Template.bind({});
+EmptyList.args = {
+  clients: [],
+};

@@ -16,7 +16,7 @@ Default.args = {
       firstName: 'John',
       lastName: 'Doe',
       profilePhoto: {
-        url: ''
+        url: 'https://gravatar.com/avatar/d496b8bf36092d7d0796cf0cb1de8b27'
       },
     },
     {
@@ -41,4 +41,10 @@ Default.args = {
 export const EmptyList = Template.bind({});
 EmptyList.args = {
   clients: [],
+};
+
+export const InLoadingState = Template.bind({});
+InLoadingState.args = {
+  clients: [],
+  loading: true,
 };

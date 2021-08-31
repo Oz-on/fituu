@@ -30,14 +30,14 @@ const ClientPreview = ({
         <Name>{firstName} {lastName}</Name>
       </div>
       <div className={"row-container"}>
-        <ActionButton onClick={handleEditCalendar} type={"button"}>
+        <ActionButton onClick={handleEditCalendar} type={"button"} data-testID={"editCallendarBtn"}>
           <CalendarToday style={{color: "primary", fontSize: 25}} />
         </ActionButton>
-        <ActionButton onClick={handleMessageClick} type={"button"}>
+        <ActionButton onClick={handleMessageClick} type={"button"} data-testID={"messageClientBtn"}>
           <Chat style={{color: "primary", fontSize: 25}} />
         </ActionButton>
-        <ActionButton onClick={handleRemoveClick} type={"button"}>
-          <RemoveCircleOutline style={{color: "primary", fontSize: 25}} />
+        <ActionButton onClick={handleRemoveClick} type={"button"} data-testID={"removeClientBtn"}>
+          <RemoveCircleOutline style={{color: "primary", fontSize: 25}}/>
         </ActionButton>
       </div>
     </ClientBarWrapper>

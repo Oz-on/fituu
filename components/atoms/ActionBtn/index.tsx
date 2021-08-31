@@ -8,9 +8,14 @@ type ActionButtonProps = {
   className?: string;
 };
 
-const ActionButton = ({children, onClick, primary, className}: ActionButtonProps) => {
+const ActionButton = ({children, onClick, primary, className, ...restProps}: ActionButtonProps) => {
   return (
-    <ActionButtonWrapper onClick={onClick} primary={primary} className={className}>
+    <ActionButtonWrapper 
+      onClick={onClick} 
+      primary={primary} 
+      className={className} 
+      {...restProps}
+    >
       {children}
     </ActionButtonWrapper>
   )

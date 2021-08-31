@@ -21,6 +21,7 @@ const Card = styled.div`
   box-shadow: 0px 4px 8px 1px rgba(21, 29, 56, 0.12);
   border-radius: 8px;
   padding: 10px 10px;
+  box-sizing: border-box;
 `;
 
 const StatsCardWrapper = styled(Card)`

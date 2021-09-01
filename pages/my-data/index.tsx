@@ -5,19 +5,19 @@ import Head from "next/head";
 import DataPanel from "../../components/pages/DataPanel";
 import PanelTemplate from "../../components/templates/PanelTemplate";
 import { ERROR_CODES } from "../../lib";
-import { useUser } from "../../lib/contexts/UserDataProvider";
+import useUser from "../../components/lib/useUser";
 
 type Props = {
 	session: Session;
 }
 const DataPage = ({session}: Props) => {
-	const {user, isLoading, error} = useUser(null);
+	const {user} = useUser(null);
 
-	if (isLoading) {
+	if (!user.data || user.loading) {
 		return null;
 	}
 
-	if (error && error.message === ERROR_CODES.authError) {
+	if (user.error && user.error.message === ERROR_CODES.authError) {
     signOut();
   }
 
@@ -27,7 +27,7 @@ const DataPage = ({session}: Props) => {
 				<title>Data</title>
 			</Head>
 			<PanelTemplate session={session}>
-				<DataPanel userData={user} offers={[]}/>
+				<DataPanel userData={user.data} offers={[]}/>
 			</PanelTemplate>
 		</>
 	)

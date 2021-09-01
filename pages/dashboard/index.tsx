@@ -3,30 +3,32 @@ import {getSession, signOut,} from "next-auth/client";
 
 import DashboardPanel from "../../components/pages/Dashboard";
 
-import { useUser } from "../../lib/contexts/UserDataProvider";
 import { ERROR_CODES } from "../../lib";
 import { Session } from "next-auth";
 import PanelTemplate from "../../components/templates/PanelTemplate";
+import useClients from "../../components/lib/useClients";
+import useUser from "../../components/lib/useUser";
 
 type Props = {
   session: Session;
 }
 
 const Dashboard = ({session}: Props) => {
-  const {user, isLoading, error} = useUser();
-
-  if (isLoading) {
+  const {user} = useUser();
+  const {clients, clientsLoading} = useClients();
+  
+  if (!user.data || user.loading ) {
     return null;
   }
-
-  if (error && error.message === ERROR_CODES.authError) {
+  
+  if (user.error && user.error.message === ERROR_CODES.authError) {
     signOut();
   }
 
-  // If user name and type is null or empty redirect to data completion page
-  if (user && user.type === '') {
+  if (user.data && (user.data.type === "" || user.data.type === "Klient")) {
+    return null;
   }
-
+  
 
   return (
     <>
@@ -34,7 +36,11 @@ const Dashboard = ({session}: Props) => {
         <title>Dashboard</title>
       </Head>
       <PanelTemplate session={session}>
-        <DashboardPanel userData={user} clients={[]}/>
+        <DashboardPanel 
+          userData={user.data} 
+          clients={clients} 
+          clientsLoading={clientsLoading}
+        />
       </PanelTemplate>
     </>
   )

@@ -8,17 +8,20 @@ import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 import SectionTitle from '../../atoms/SectionTitle';
 import ActionButton from '../../atoms/ActionBtn';
 import {mapTagToBool, mapTagToTitle, mapUserTypeToInputId} from '../../../lib';
-import {useUserDataDispatch, UserDataEditionInputs, UserDataProps} from '../../../lib/contexts/UserDataProvider';
+import {UserDataEditionInputs, UserDataProps} from '../../lib/useUser';
 import ProfileImage from '../../organisms/ProfileImage';
 
 type Props = {
-  session: Object,
-  userData: UserDataProps
-}
+  userData: UserDataProps;
+  updateUserData: (
+    userData: UserDataProps, 
+    newData: UserDataEditionInputs, 
+    profileImage: File | void
+  ) => void;
+};
 
-const EditDataPanel = ({session, userData}: Props) => {
+const EditDataPanel = ({userData, updateUserData}: Props) => {
   const [profileImageFile, setProfileImageFile] = useState(null);
-  const {updateUserData} = useUserDataDispatch();
   const tags = mapTagToBool(userData.tags);
 
   const {control, register, handleSubmit, formState: {errors}} = useForm<UserDataEditionInputs>({

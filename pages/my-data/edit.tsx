@@ -2,7 +2,7 @@ import Head from "next/head";
 import { getSession, signOut } from "next-auth/client";
 
 import EditDataPanel from "../../components/pages/EditDataPanel";
-import { useUser } from "../../lib/contexts/UserDataProvider";
+import useUser from "../../components/lib/useUser";
 import { ERROR_CODES } from "../../lib";
 import { Session } from "next-auth";
 import PanelTemplate from "../../components/templates/PanelTemplate";
@@ -12,13 +12,13 @@ type Props = {
 }
 
 const EditDataPage = ({session}: Props) => {
-  const {user, isLoading, error} = useUser(null);
+  const {user, updateUserData} = useUser(null);
 
-  if (isLoading) {
+  if (!user.data || user.loading) {
     return null;
   }
 
-  if (error && error.message === ERROR_CODES.authError) {
+  if (user.error && user.error.message === ERROR_CODES.authError) {
     signOut();
   }
 
@@ -28,7 +28,10 @@ const EditDataPage = ({session}: Props) => {
         <title>Edit data</title>
       </Head>
       <PanelTemplate session={session}>
-        <EditDataPanel session={session} userData={user}/>
+        <EditDataPanel
+          userData={user.data} 
+          updateUserData={updateUserData}
+        />
       </PanelTemplate>
     </>
   );

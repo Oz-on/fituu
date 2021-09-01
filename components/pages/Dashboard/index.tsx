@@ -1,22 +1,33 @@
+import {useState} from "react";
 import styled from 'styled-components';
 
 import SectionTitle from '../../atoms/SectionTitle';
 import ActionButton from '../../atoms/ActionBtn';
 import StatsCard from '../../organisms/StatsCard';
 import DataCard from '../../organisms/DataCard';
-
-import {UserDataProps} from '../../../lib/contexts/UserDataProvider';
 import ProfileImage from '../../organisms/ProfileImage';
 import ClientsList from '../../organisms/ClientsList';
+import NewClientForm from '../../organisms/NewClientForm';
+
+import {Client} from "../../lib/useClients";
+import {UserDataProps} from "../../lib/useUser";
 
 type DashboardPanelProps = {
   userData: UserDataProps;
-  clients: [],
-}
+  clients: Array<Client>;
+  clientsLoading: boolean;
+};
 
-const Dashboard = ({userData, clients}: DashboardPanelProps) => {
+const Dashboard = ({userData, clients, clientsLoading}: DashboardPanelProps) => {
+  const [newClientFormVisible, setNewClientFormVisible] = useState(false);
+
   return (
     <Container>
+      <NewClientForm 
+        visible={newClientFormVisible} 
+        handleCancelClick={() => setNewClientFormVisible(false)} 
+        handleAddClientClick={() => {}}
+      />
       <SectionTitle>dashboard</SectionTitle>
       <RowContainer>
         <ProfileImage 
@@ -37,13 +48,13 @@ const Dashboard = ({userData, clients}: DashboardPanelProps) => {
         <SectionTitle>Klienci</SectionTitle>
         <ActionButton 
           primary 
-          onClick={() => {}}
+          onClick={() => setNewClientFormVisible(true)}
           type={'button'}
         >
           + Dodaj nowego klienta
         </ActionButton>
       </RowContainer>
-      <ClientsList clients={clients}/>
+      <ClientsList clients={clients} loading={clientsLoading}/>
     </Container>
   );
 };

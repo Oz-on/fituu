@@ -80,8 +80,9 @@ const EditDataPanel = ({userData, updateUserData}: Props) => {
           <InputContainer>
             <Label>Specjalizacja</Label>
             <Select {...register('type')} id="specialization">
-              <option value={'personal_trainer'}>Trener Personalny</option>
-              <option value={'nutritionist'}>Dietetyk</option>
+              <option value={1}>Trener Personalny</option>
+              <option value={2}>Dietetyk</option>
+              <option value={3}>Klient</option>
             </Select>
           </InputContainer>
         </div>

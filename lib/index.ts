@@ -1,4 +1,4 @@
-import {TagProps} from './contexts/UserDataProvider';
+import {TagProps} from '../components/lib/useUser';
 
 export const ERROR_CODES = {
   authError: 'authError',
@@ -47,27 +47,26 @@ export const getTagsArr = (tags: Object): Array<number> => {
   return tagsArr;
 }
 
-export const mapUserType = (name: string): number => {
-  switch(name) {
-    case 'personal_trainer':
-      return 1;
-    case 'nutritionist':
-      return 2;
-    case 'client':
-      return 3;
-    default:
-      throw new Error('Wrong user type name given');
+export const mapUserTypeIdToString = (id: number): string => {
+  switch (id) {
+    case 1:
+      return "Trener Personalny";
+    case 2:
+      return "Dietetyk";
+    case 3:
+      return "Klient";
   }
 }
 
-export const mapUserTypeToInputId= (type: string): string => {
+
+export const mapUserTypeToInputId= (type: string): number => {
   switch(type) {
     case 'Trener personalny':
-      return 'personal_trainer';
+      return 1;
     case 'Dietetyk':
-      return 'nutritionist';
+      return 2;
     case 'Klient':
-      return 'client';
+      return 3;
     default:
       throw new Error('Wrong user type name given');
   }

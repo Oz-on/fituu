@@ -1,7 +1,7 @@
 import {useSession} from "next-auth/client";
 import { useRouter } from "next/router";
 import useSWR, { mutate} from "swr";
-import { getTagsArr, mapUserType } from "../../../lib";
+import { getTagsArr } from "../../../lib";
 import { fetcherWithToken } from "../api";
 
 export type TagProps = {
@@ -58,18 +58,18 @@ export type RequestPatchUserData = {
   height?: number;
 }
 export type UserDataEditionInputs = {
-  fullName: string,
-  city: string,
-  type: string,
-  description: string,
-  '1': boolean,
-  '2': boolean,
-  '3': boolean,
-  '4': boolean,
-  '5': boolean,
-  '6': boolean,
-  '7': boolean,
-  '8': boolean,
+  fullName: string;
+  city: string;
+  type: number;
+  description: string;
+  '1': boolean;
+  '2': boolean;
+  '3': boolean;
+  '4': boolean;
+  '5': boolean;
+  '6': boolean;
+  '7': boolean;
+  '8': boolean;
 };
 
 const useUser = (id?: number) => {
@@ -93,7 +93,7 @@ const useUser = (id?: number) => {
       lastName: lastName,
       city: city,
       description: description,
-      type: mapUserType(type),
+      type: type,
       tags: getTagsArr(tags),
     }
 
@@ -103,7 +103,7 @@ const useUser = (id?: number) => {
     data.append('lastName', lastName);
     data.append('description', description);
     data.append('city', city);
-    data.append('type', mapUserType(type).toString());
+    data.append('type', type.toString());
     getTagsArr(tags).forEach(tag => {
       data.append('tags', tag.toString());
     });

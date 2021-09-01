@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import EditIcon from '../../atoms/EditIcon';
 
-import {UserDataProps} from '../../../lib/contexts/UserDataProvider';
+import {UserDataProps} from '../../lib/useUser';
 import Chip from '../../atoms/Chip';
 
 type DataCardProps = {

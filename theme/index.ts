@@ -9,4 +9,7 @@ export const theme = {
     fontSecondary: "#d1d5e2",
     chipPrimary: "#d7e5fd",
   },
+  font: {
+    family: "Roboto, sans-serif"
+  }
 };

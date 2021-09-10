@@ -26,6 +26,7 @@ const Container = styled.div`
   flex-direction: column;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 
   main {
     /* min-height: calc(100vh - 160px); */

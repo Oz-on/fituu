@@ -36,7 +36,8 @@ const Footer = () => {
 export default Footer;
 
 const FooterWrapper = styled.footer`
-  width: 100vw;
+  box-sizing: border-box;
+  width: 100%;
   padding: 25px 50px;
   display: flex;
   flex-direction: row;
@@ -66,6 +67,7 @@ const FooterWrapper = styled.footer`
     text-decoration: underline;
   }
 `;
+
 const Icon = styled.i`
   width: 20px;
   height: 20px;

@@ -16,7 +16,7 @@ const ClientPicker = ({clients, onSelectClient}: Props) => {
             firstName={client.firstName}
             lastName={client.lastName}
             profileImageUrl={client.profilePhoto.url}
-            onClick={onSelectClient}
+            onClick={() => onSelectClient(client.id)}
           />
         ))
       }

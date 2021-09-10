@@ -66,6 +66,7 @@ const HeaderWrapper = styled.header<{alternative?: boolean}>`
   padding: 25px 50px;
   background: ${({alternative}) => alternative ? '#ffffff' : 'transparent'};
   box-shadow: ${({alternative}) => alternative ? "0px 4px 14px -6px rgba(39, 46, 57, 0.1)" : "0px 4px 8px 1px rgba(21, 29, 56, 0.12)"};
+  box-sizing: border-box;
 `;
 
 const LinkWrapper = styled.a<{primary?: boolean}>`

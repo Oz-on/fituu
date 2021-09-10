@@ -9,11 +9,12 @@ const Container = styled.div`
   flex-direction: column;
   padding: 40px 0px 0px 10px;
   background: #fff;
+  box-sizing: border-box;
 `;
 
 const SideNav = () => {
   const { pathname } = useRouter();
-  const path = pathname ? pathname.split("/")[0] : '';
+  const path = pathname ? pathname.split("/")[1] : '';
   return (
     <Container>
       <SideNavElement
@@ -30,6 +31,11 @@ const SideNav = () => {
         selected={path == "library"}
         destination={"/library/exercises"}
         description={"Biblioteka ćwiczeń"}
+      />
+      <SideNavElement
+        selected={path === "conversations"}
+        destination={"/conversations"}
+        description={"Wiadomości"}
       />
     </Container>
   );

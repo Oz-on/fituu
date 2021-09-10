@@ -71,3 +71,18 @@ export const mapUserTypeToInputId= (type: string): number => {
       throw new Error('Wrong user type name given');
   }
 }
+
+export const getLastMessageDate = (timestamp: string) => {
+  const lastDate = new Date(timestamp);
+  const now = new Date();
+
+  if (
+    lastDate.getFullYear() === now.getFullYear() &&
+    lastDate.getMonth() === now.getMonth() &&
+    lastDate.getDate() === now.getDate()
+  ) {
+    return lastDate.toLocaleTimeString();
+  } else {
+    return lastDate.toLocaleDateString();
+  }
+};

@@ -9,6 +9,10 @@ export type ConversationParticipant = {
   profilePhoto: ProfilePhoto;
 };
 
+export type ConversationParticipantsMap = {
+  [id: number]: ConversationParticipant;
+};
+
 export type Conversation = {
   id: number;
   description: string;
